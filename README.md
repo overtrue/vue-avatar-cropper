@@ -2,8 +2,6 @@
 
 <p align="center">A simple and elegant avatar cropping and upload plugin.</p>
 
----
-
 ## Installing
 
 ```shell
