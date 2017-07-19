@@ -26,11 +26,17 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         include: __dirname,
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        options: {
+          loaders: {
+            scss: 'style-loader!css-loader!sass-loader',
+            sass: 'style-loader!css-loader!sass-loader?indentedSyntax',
+          },
+        },
       },
       {
         test: /\.css$/,
-        loader: 'vue-loader',
+        loader: 'style-loader!css-loader'
       }
     ]
   },
@@ -45,10 +51,5 @@ module.exports = {
         warnings: false
       }
     })
-  ],
-  resolveLoader: {
-    alias: {
-      'scss-loader': 'sass-loader',
-    },
-  }
+  ]
 }
