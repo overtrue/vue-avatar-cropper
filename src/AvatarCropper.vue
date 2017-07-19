@@ -36,6 +36,10 @@
         type: String,
         default: 'file'
       },
+      uploadFormData: {
+        type: Object,
+        default: {}
+      },
       uploaded: {
         type: Function,
         required: true
@@ -97,10 +101,16 @@
       },
       uploadImage(callback) {
         this.cropper.getCroppedCanvas().toBlob((blob) => {
-          let data = new FormData()
-          data.append(this.uploadFormName, blob)
+          let form = new FormData()
+          let xhr = new XMLHttpRequest()
+          let data = Object.assign({}, this.uploadFormData)
 
-          var xhr = new XMLHttpRequest()
+          data[this.uploadFormName] = blob
+
+          for (let key in data) {
+            form.append(key, data[key])
+          }
+
           xhr.open('POST', this.uploadUrl, true)
 
           for (let header in this.uploadHeaders) {
