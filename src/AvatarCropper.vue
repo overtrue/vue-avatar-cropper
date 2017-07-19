@@ -188,6 +188,7 @@
           cursor: pointer;
           border: none;
           background: transparent;
+          outline: none;
           &:hover {
             background-color: #2aabd2;
             color: #fff;
