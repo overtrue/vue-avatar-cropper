@@ -30,7 +30,7 @@ import AvatarCropper from 'vue-avatar-cropper'
 
 | Property | Type | Description | Default |
 | :------ | :------: | :------ | :------: |
-| trigger | String | Element | The element to trigger avatar pick | null |
+| trigger | String\|Element | The element to trigger avatar pick | null |
 | upload-url | String | The url to upload croppped image | null |
 | uploaded | Function | The handler to handle uploaded event | null |
 | upload-form-name | Object | Form name of upload request | 'file' |
