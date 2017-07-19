@@ -19,7 +19,7 @@
 
   export default {
     props: {
-      delegate: {
+      trigger: {
         type: [String, Element],
         required: true
       },
@@ -122,11 +122,11 @@
       }
     },
     mounted() {
-      let delegate = typeof this.delegate == 'object' ? this.delegate : document.querySelector(this.delegate)
-      if (!delegate) {
-        throw new Error('No avatar make delegate found.')
+      let trigger = typeof this.trigger == 'object' ? this.trigger : document.querySelector(this.trigger)
+      if (!trigger) {
+        throw new Error('No avatar make trigger found.')
       }
-      delegate.addEventListener('click', this.pickImage)
+      trigger.addEventListener('click', this.pickImage)
     }
   }
 </script>
