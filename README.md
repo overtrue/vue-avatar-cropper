@@ -28,15 +28,15 @@ import AvatarCropper from 'vue-avatar-cropper'
 
 ### Properties
 
-| Property Name | Type | Description |
-| :------ | :------: | :------ |
-| trigger | String\|Element | The element to trigger avatar pick |
-| upload-url | String | The url to upload croppped image |
-| uploaded | Function | The handler to handle uploaded event |
-| upload-form-name | Object | Form name of upload request, default: 'file' |
-| upload-handler | Function | The handler to handle upload replace default upload handler |
-| upload-headers | Object | Headers to append to upload request, default: `{}` |
-| mimes | String | Allowed image formats, default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon' |
+ Property Name | Type | Description
+ -------- | -------- | --------
+ trigger | String\|Element | The element to trigger avatar pick
+ upload-url | String | Url of upload croppped image
+ uploaded | Function | Handler of uploaded event
+ upload-form-name | Object | Form name of upload request, default: 'file'
+ upload-handler | Function | Handler to replace default upload handler
+ upload-headers | Object | Headers of upload request, default: `{}`
+ mimes | String | Allowed image formats, default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
 
 ## License
 
