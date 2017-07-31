@@ -32,7 +32,7 @@ import AvatarCropper from 'vue-avatar-cropper'
  -------- | -------- | --------
  `trigger` | String\|Element | The element to trigger avatar pick
  `upload-url` | String | Url of upload croppped image
- `uploaded` | Function | Handler of uploaded event
+ `uploaded(response)` | Function | Handler of uploaded event, the parameter `response` is your server response result
  `upload-form-name` | Object | Form name of upload request, default: 'file'
  `upload-form-data` | Object | Additional form data, default: '{}'
  `upload-handler` | Function | Handler to replace default upload handler
