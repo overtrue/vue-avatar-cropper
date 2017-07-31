@@ -70,7 +70,7 @@
         } else {
           throw new Error('No upload handler found.')
         }
-        this.destory()
+        this.destroy()
       },
       pickImage() {
         let id = 'avatar-img-input'
