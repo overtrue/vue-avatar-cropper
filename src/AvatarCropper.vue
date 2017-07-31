@@ -37,7 +37,10 @@
         default: 'file'
       },
       uploadFormData: {
-        type: Object
+        type: Object,
+        default() {
+          return {}
+        }
       },
       uploaded: {
         type: Function,
@@ -102,7 +105,7 @@
         this.cropper.getCroppedCanvas().toBlob((blob) => {
           let form = new FormData()
           let xhr = new XMLHttpRequest()
-          let data = Object.assign({}, this.uploadFormData || {})
+          let data = Object.assign({}, this.uploadFormData)
 
           data[this.uploadFormName] = blob
 
