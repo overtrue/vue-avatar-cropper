@@ -38,6 +38,7 @@ import AvatarCropper from 'vue-avatar-cropper'
  `upload-handler` | Function | Handler to replace default upload handler
  `upload-headers` | Object | Headers of upload request, default: `{}`
  `mimes` | String | Allowed image formats, default: <br>`image/png, image/gif, image/jpeg, image/bmp, image/x-icon`
+ `labels` | Object | Label for buttons, default: `{ submit: "提交", cancel: "取消"}`
 
 ## License
 

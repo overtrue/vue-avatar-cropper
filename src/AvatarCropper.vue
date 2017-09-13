@@ -6,8 +6,8 @@
         <img :src="dataUrl" alt="" @load.stop="createCropper" />
       </div>
       <div class="avatar-cropper-footer">
-        <button class="avatar-cropper-btn" @click="destroy">取消</button>
-        <button class="avatar-cropper-btn" @click="submit">提交</button>
+        <button class="avatar-cropper-btn" @click="destroy" v-text="labels.cancel">Cancel</button>
+        <button class="avatar-cropper-btn" @click="submit" v-text="labels.submit">Submit</button>
       </div>
     </div>
   </div>
@@ -49,6 +49,10 @@
       mimes: {
         type: String,
         default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
+      },
+      labels: {
+        submit: "提交",
+        cancel: "取消"
       }
     },
     data() {
