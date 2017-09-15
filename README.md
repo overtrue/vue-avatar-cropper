@@ -22,7 +22,6 @@ import AvatarCropper from 'vue-avatar-cropper'
 <avatar-cropper
     trigger="#set-avatar"
     upload-url="/files/upload"
-    :uploaded="updateUserAvatar"
 ></avatar-cropper>
 ```
 
@@ -32,13 +31,49 @@ import AvatarCropper from 'vue-avatar-cropper'
  -------- | -------- | --------
  `trigger` | String\|Element | The element to trigger avatar pick
  `upload-url` | String | Url of upload croppped image
- `uploaded(response)` | Function | Handler of uploaded event, the parameter `response` is your server response result
  `upload-form-name` | Object | Form name of upload request, default: 'file'
  `upload-form-data` | Object | Additional form data, default: '{}'
  `upload-handler` | Function | Handler to replace default upload handler
  `upload-headers` | Object | Headers of upload request, default: `{}`
  `mimes` | String | Allowed image formats, default: <br>`image/png, image/gif, image/jpeg, image/bmp, image/x-icon`
  `labels` | Object | Label for buttons, default: `{ submit: "提交", cancel: "取消"}`
+
+### Events
+
+- `uploading` before submit xhr request, params:
+    - `form` object, FormData instance.
+    - `xhr`  object, XMLHttpRequest instance.
+
+- `uploaded` after request, params:
+    - `response` object, json parsed from `xhr.responseText`
+    - `form` object, FormData instance.
+    - `xhr`  object, XMLHttpRequest instance.
+
+You can listen these events like this:
+
+```html
+<avatar-cropper
+    trigger="#set-avatar"
+    upload-url="/files/upload"
+    @uploading="handleUploading"
+    @uploaded="handleUploaded"
+></avatar-cropper>
+```
+
+```js
+    ...
+    methods: {
+        ...
+        handleUploading(form. xhr) {
+            form.append('foo', 'bar')
+        },
+        handleUploaded(response, form, xhr) {
+            // update user avatar attribute
+        }
+        ...
+    }
+    ...
+```
 
 ## License
 

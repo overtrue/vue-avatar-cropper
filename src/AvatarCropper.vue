@@ -42,10 +42,6 @@
           return {}
         }
       },
-      uploaded: {
-        type: Function,
-        required: true
-      },
       mimes: {
         type: String,
         default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
@@ -68,7 +64,7 @@
       },
       submit() {
         if (this.uploadUrl) {
-          this.uploadImage(this.uploaded)
+          this.uploadImage()
         } else if (this.uploadHandler) {
           this.uploadHandler(this.cropper)
         } else {
@@ -106,7 +102,7 @@
           zoomable: false,
         })
       },
-      uploadImage(callback) {
+      uploadImage() {
         this.cropper.getCroppedCanvas().toBlob((blob) => {
           let form = new FormData()
           let xhr = new XMLHttpRequest()
@@ -118,6 +114,8 @@
             form.append(key, data[key])
           }
 
+          this.$emit('uploading', form, xhr)
+
           xhr.open('POST', this.uploadUrl, true)
 
           for (let header in this.uploadHeaders) {
@@ -128,7 +126,7 @@
             if (xhr.readyState === 4) {
               var response = JSON.parse(xhr.responseText)
               if (xhr.status === 200) {
-                callback(response);
+                this.$emit('uploaded', response, form, xhr)
               } else {
                 throw new Error('Image upload fail.', xhr)
               }
