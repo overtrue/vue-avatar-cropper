@@ -40,14 +40,14 @@ import AvatarCropper from 'vue-avatar-cropper'
 
 ### Events
 
-- `uploading` before submit xhr request, params:
-    - `form` object, FormData instance.
-    - `xhr`  object, XMLHttpRequest instance.
+- `uploading` before submit upload request, params:
+    - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
+    - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
 
-- `uploaded` after request, params:
+- `uploaded` after request has finished, params:
     - `response` object, json parsed from `xhr.responseText`
-    - `form` object, FormData instance.
-    - `xhr`  object, XMLHttpRequest instance.
+    - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
+    - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
 
 You can listen these events like this:
 
