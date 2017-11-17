@@ -13,16 +13,38 @@ $  npm i vue-avatar-cropper --save-dev
 ## Usage
 
 ```js
-import AvatarCropper from 'vue-avatar-cropper'
-```
+<template>
+  <div class="text-center">
+    <img v-if="userAvatar">
+    <button id="pick-avatar">Select An image</button>
+    <avatar-cropper
+      :uploaded="updateUserAvatar"
+      trigger="#pick-avatar"
+      upload-url="/files/upload"></avatar-cropper>
+  </div>
+</template>
 
-```html
-<button type="button" class="btn btn-primary" id="set-avatar">Update avatar</button>
+<script>
+  import AvatarCropper from "vue-avatar-cropper"
 
-<avatar-cropper
-    trigger="#set-avatar"
-    upload-url="/files/upload"
-></avatar-cropper>
+  export default {
+    components: { AvatarCropper },
+    data() {
+      return {
+          userAvatar: undefined,
+      }
+    },
+    methods: {
+      updateUserAvatar(resp) {
+        this.$http.patch('/users/23', {
+          avatar: resp.relative_url
+        }).then(() => {
+          this.userAvatar = resp.relative_url
+        })
+      }
+    }
+  }
+</script>
 ```
 
 ### Properties
