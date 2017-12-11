@@ -47,8 +47,13 @@
         default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
       },
       labels: {
-        submit: "提交",
-        cancel: "取消"
+        type: Object,
+        default() {
+          return {
+            submit: "提交",
+            cancel: "取消"
+          }
+        }
       }
     },
     data() {
