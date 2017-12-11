@@ -127,7 +127,7 @@
             xhr.setRequestHeader(header, this.uploadHeaders[header])
           }
 
-          xhr.onreadystatechange = function () {
+          xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
               var response = JSON.parse(xhr.responseText)
               if (xhr.status === 200) {
