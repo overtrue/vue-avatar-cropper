@@ -92,7 +92,7 @@ You can listen these events like this:
     ...
     methods: {
         ...
-        handleUploading(form. xhr) {
+        handleUploading(form, xhr) {
             form.append('foo', 'bar')
         },
         handleUploaded(response, form, xhr) {
