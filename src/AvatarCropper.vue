@@ -59,7 +59,8 @@
     data() {
       return {
         cropper: undefined,
-        dataUrl: undefined
+        dataUrl: undefined,
+        filename: undefined
       }
     },
     methods: {
@@ -91,7 +92,11 @@
               reader.onload = (e) => {
                 this.dataUrl = e.target.result
               }
+
               reader.readAsDataURL(fileInput.files[0])
+
+              this.filename = fileInput.files[0].fileName || 'unknown'
+              this.$emit('changed', fileInput.files[0], reader)
             }
           })
         }
@@ -113,11 +118,11 @@
           let xhr = new XMLHttpRequest()
           let data = Object.assign({}, this.uploadFormData)
 
-          data[this.uploadFormName] = blob
-
           for (let key in data) {
             form.append(key, data[key])
           }
+
+          form.append(this.uploadFormName, blob, this.filename)
 
           this.$emit('uploading', form, xhr)
 
