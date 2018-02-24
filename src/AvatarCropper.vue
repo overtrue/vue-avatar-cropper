@@ -138,7 +138,7 @@
               if (xhr.status === 200) {
                 this.$emit('uploaded', response, form, xhr)
               } else {
-                throw new Error('Image upload fail.', xhr)
+                this.$emit('error', 'Image upload fail.', 'upload', xhr)
               }
             }
           }
@@ -149,7 +149,7 @@
     mounted() {
       let trigger = typeof this.trigger == 'object' ? this.trigger : document.querySelector(this.trigger)
       if (!trigger) {
-        throw new Error('No avatar make trigger found.')
+        this.$emit('error', 'No avatar make trigger found.', 'user')
       }
       trigger.addEventListener('click', this.pickImage)
     }

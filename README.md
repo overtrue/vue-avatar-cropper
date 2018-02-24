@@ -62,14 +62,19 @@ $  npm i vue-avatar-cropper --save-dev
 
 ### Events
 
-- `uploading` before submit upload request, params:
+- **uploading** before submit upload request, params:
     - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
     - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
 
-- `uploaded` after request has finished, params:
+- **uploaded** after request has finished, params:
     - `response` object, json parsed from `xhr.responseText`
     - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
     - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
+
+- **error** something went wrong, params:
+  - `message` error message.
+  - `type` error type, example: `upload`/`user`.
+  - `context` context data.
 
 You can listen these events like this:
 
@@ -79,6 +84,7 @@ You can listen these events like this:
     upload-url="/files/upload"
     @uploading="handleUploading"
     @uploaded="handleUploaded"
+    @error="handlerError"
 ></avatar-cropper>
 ```
 
@@ -91,6 +97,11 @@ You can listen these events like this:
         },
         handleUploaded(response, form, xhr) {
             // update user avatar attribute
+        },
+        handlerError(message, type, xhr) {
+          if (type == 'upload') {
+            // xhr.response...
+          }
         }
         ...
     }
