@@ -7,7 +7,7 @@
 ## Installing
 
 ```shell
-$  npm i vue-avatar-cropper --save-dev
+$  npm i vue-avatar-cropper
 ```
 
 ## Usage
@@ -15,12 +15,12 @@ $  npm i vue-avatar-cropper --save-dev
 ```js
 <template>
   <div class="text-center">
-    <img v-if="userAvatar">
-    <button id="pick-avatar">Select An image</button>
+    <img v-if="userAvatar" :src="userAvatar>
+    <button id="pick-avatar">Select an image</button>
     <avatar-cropper
-      :uploaded="updateUserAvatar"
+      @uploaded="handleUploaded"
       trigger="#pick-avatar"
-      upload-url="/files/upload"></avatar-cropper>
+      upload-url="/files/upload" />
   </div>
 </template>
 
@@ -35,12 +35,8 @@ $  npm i vue-avatar-cropper --save-dev
       }
     },
     methods: {
-      updateUserAvatar(resp) {
-        this.$http.patch('/users/23', {
-          avatar: resp.relative_url
-        }).then(() => {
-          this.userAvatar = resp.relative_url
-        })
+      handleUploaded(resp) {
+        this.userAvatar = resp.relative_url;
       }
     }
   }
