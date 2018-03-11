@@ -15,7 +15,7 @@ $  npm i vue-avatar-cropper
 ```js
 <template>
   <div class="text-center">
-    <img v-if="userAvatar" :src="userAvatar>
+    <img v-if="userAvatar" :src="userAvatar">
     <button id="pick-avatar">Select an image</button>
     <avatar-cropper
       @uploaded="handleUploaded"
