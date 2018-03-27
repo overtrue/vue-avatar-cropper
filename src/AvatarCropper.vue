@@ -134,7 +134,12 @@
 
           xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-              let response = JSON.parse(xhr.responseText)
+              let response = ''
+              try {
+                response = JSON.parse(xhr.responseText)
+              } catch (err) {
+                response = xhr.responseText
+              }
               this.$emit('completed', response, form, xhr)
 
               if ([200, 201, 204].indexOf(xhr.status) > -1) {
