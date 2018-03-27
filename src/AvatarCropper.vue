@@ -134,8 +134,10 @@
 
           xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-              var response = JSON.parse(xhr.responseText)
-              if (xhr.status === 200) {
+              let response = JSON.parse(xhr.responseText)
+              this.$emit('completed', response, form, xhr)
+
+              if ([200, 201, 204].indexOf(xhr.status)) {
                 this.$emit('uploaded', response, form, xhr)
               } else {
                 this.$emit('error', 'Image upload fail.', 'upload', xhr)
