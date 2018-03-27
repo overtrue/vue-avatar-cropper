@@ -137,7 +137,7 @@
               let response = JSON.parse(xhr.responseText)
               this.$emit('completed', response, form, xhr)
 
-              if ([200, 201, 204].indexOf(xhr.status)) {
+              if ([200, 201, 204].indexOf(xhr.status) > -1) {
                 this.$emit('uploaded', response, form, xhr)
               } else {
                 this.$emit('error', 'Image upload fail.', 'upload', xhr)
