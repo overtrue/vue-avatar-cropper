@@ -12,7 +12,7 @@ $  npm i vue-avatar-cropper
 
 ## Usage
 
-```js
+```vue
 <template>
   <div class="text-center">
     <img v-if="userAvatar" :src="userAvatar">
