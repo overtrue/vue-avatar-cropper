@@ -73,12 +73,13 @@
         this.dataUrl = undefined
       },
       submit() {
+        this.$emit('submit')
         if (this.uploadUrl) {
           this.uploadImage()
         } else if (this.uploadHandler) {
           this.uploadHandler(this.cropper)
         } else {
-          throw new Error('No upload handler found.')
+          this.$emit('error', 'No upload handler found.', 'user')
         }
         this.destroy()
       },
