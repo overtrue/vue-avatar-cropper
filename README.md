@@ -64,12 +64,12 @@ $  npm i vue-avatar-cropper
     - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
     - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
 
-- **uploaded** after request has completed, params:
+- **uploaded** after request is successful, params:
     - `response` object, json parsed from `xhr.responseText`
     - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
     - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
 
-- **completed** after request is successful, params:
+- **completed** after request has completed, params:
     - `response` object, json parsed from `xhr.responseText`
     - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
     - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
