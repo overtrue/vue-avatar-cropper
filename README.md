@@ -58,6 +58,8 @@ $  npm i vue-avatar-cropper
 
 ### Events
 
+- **submit** right after a click on the submit button
+
 - **uploading** before submit upload request, params:
     - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
     - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
