@@ -53,6 +53,7 @@ $  npm i vue-avatar-cropper
  `upload-form-data` | Object | Additional form data, default: '{}'
  `upload-handler` | Function | Handler to replace default upload handler
  `upload-headers` | Object | Headers of upload request, default: `{}`
+ `cropper-options` | Object | Options passed to [cropperJS](https://github.com/fengyuanchen/cropperjs#options) instance, default: `{aspectRatio: 1, autoCropArea: 1, viewMode: 1, movable: false, zoomable: false}`
  `output-options` | Object | Options passed to the [cropper.getCroppedCanvas()](https://github.com/fengyuanchen/cropperjs#getcroppedcanvasoptions) method, default: `{width: 512, height: 512}`
  `output-mime` | String | The resulting avatar image mime type, default: `image/jpeg`
  `output-quality` | Number | The resulting avatar image quality [0 - 1] (if the output-mime property is `image/jpeg` or `image/webp`), default: `0.9`

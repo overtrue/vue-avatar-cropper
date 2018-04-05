@@ -45,6 +45,18 @@
           return {}
         }
       },
+      cropperOptions: {
+        type: Object,
+        default() {
+          return {
+            aspectRatio: 1,
+            autoCropArea: 1,
+            viewMode: 1,
+            movable: false,
+            zoomable: false,
+          }
+        }
+      },
       outputOptions: {
         type: Object,
         default() {
@@ -104,13 +116,7 @@
         this.$refs.input.click()
       },
       createCropper() {
-        this.cropper = new Cropper(this.$refs.img, {
-          aspectRatio: 1,
-          autoCropArea: 1,
-          viewMode: 1,
-          movable: false,
-          zoomable: false,
-        })
+        this.cropper = new Cropper(this.$refs.img, this.cropperOptions)
       },
       uploadImage() {
         this.cropper.getCroppedCanvas(this.outputOptions).toBlob((blob) => {
