@@ -45,6 +45,23 @@
           return {}
         }
       },
+      outputOptions: {
+        type: Object,
+        default() {
+          return {
+            width: 512,
+            height: 512
+          }
+        }
+      },
+      outputMime: {
+        type: String,
+        default: 'image/jpeg'
+      },
+      outputQuality: {
+        type: Number,
+        default: 0.9
+      },
       mimes: {
         type: String,
         default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
@@ -96,7 +113,7 @@
         })
       },
       uploadImage() {
-        this.cropper.getCroppedCanvas().toBlob((blob) => {
+        this.cropper.getCroppedCanvas(this.outputOptions).toBlob((blob) => {
           let form = new FormData()
           let xhr = new XMLHttpRequest()
           let data = Object.assign({}, this.uploadFormData)
@@ -133,7 +150,7 @@
             }
           }
           xhr.send(form);
-        })
+        }, this.outputMime, this.outputQuality)
       }
     },
     mounted() {
