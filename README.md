@@ -53,7 +53,13 @@ $  npm i vue-avatar-cropper
  `upload-form-data` | Object | Additional form data, default: '{}'
  `upload-handler` | Function | Handler to replace default upload handler
  `upload-headers` | Object | Headers of upload request, default: `{}`
- `cropper-options` | Object | Options passed to the [cropperJS](https://github.com/fengyuanchen/cropperjs#options) instance, <br>default: ```{ aspectRatio: 1, autoCropArea: 1, viewMode: 1, movable: false, zoomable: false}```
+ `cropper-options` | Object | Options passed to the [cropperJS](https://github.com/fengyuanchen/cropperjs#options) instance, <br>default: `{` 
+   | | | `aspectRatio: 1, `
+   | | | `autoCropArea: 1, `
+   | | | `viewMode: 1,`
+   | | | `movable: false,`
+   | | | `zoomable: false`
+   | | | `}`
  `output-options` | Object | Options passed to the [cropper.getCroppedCanvas()](https://github.com/fengyuanchen/cropperjs#getcroppedcanvasoptions) method, <br>default: `{width: 512, height: 512}`
  `output-mime` | String | The resulting avatar image mime type, default: `image/jpeg`
  `output-quality` | Number | The resulting avatar image quality [0 - 1], default: `0.9`<br>(if the output-mime property is `image/jpeg` or `image/webp`)
@@ -84,6 +90,7 @@ $  npm i vue-avatar-cropper
   - `context` context data.
 
 You can listen these events like this:
+
 
 ```html
 <avatar-cropper
