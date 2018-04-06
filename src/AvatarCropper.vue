@@ -45,6 +45,35 @@
           return {}
         }
       },
+      cropperOptions: {
+        type: Object,
+        default() {
+          return {
+            aspectRatio: 1,
+            autoCropArea: 1,
+            viewMode: 1,
+            movable: false,
+            zoomable: false,
+          }
+        }
+      },
+      outputOptions: {
+        type: Object,
+        default() {
+          return {
+            width: 512,
+            height: 512
+          }
+        }
+      },
+      outputMime: {
+        type: String,
+        default: 'image/jpeg'
+      },
+      outputQuality: {
+        type: Number,
+        default: 0.9
+      },
       mimes: {
         type: String,
         default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
@@ -87,16 +116,10 @@
         this.$refs.input.click()
       },
       createCropper() {
-        this.cropper = new Cropper(this.$refs.img, {
-          aspectRatio: 1,
-          autoCropArea: 1,
-          viewMode: 1,
-          movable: false,
-          zoomable: false,
-        })
+        this.cropper = new Cropper(this.$refs.img, this.cropperOptions)
       },
       uploadImage() {
-        this.cropper.getCroppedCanvas().toBlob((blob) => {
+        this.cropper.getCroppedCanvas(this.outputOptions).toBlob((blob) => {
           let form = new FormData()
           let xhr = new XMLHttpRequest()
           let data = Object.assign({}, this.uploadFormData)
@@ -133,7 +156,7 @@
             }
           }
           xhr.send(form);
-        })
+        }, this.outputMime, this.outputQuality)
       }
     },
     mounted() {
