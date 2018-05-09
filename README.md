@@ -4,6 +4,8 @@
 
 ![image](https://user-images.githubusercontent.com/1472352/28398207-b32907b0-6d38-11e7-998a-32d34362b341.png)
 
+[![Edit Vue Template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/nn8xrn4y6j?module=%2Fsrc%2Fcomponents%2FAvatar.vue)
+
 ## Installing
 
 ```shell
@@ -126,7 +128,9 @@ You can listen these events like this:
     ...
 ```
 
-:rocket: [There is an online demo](https://codesandbox.io/s/nn8xrn4y6j)
+:rocket: There is an online demo:
+
+[![Edit Vue Template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/nn8xrn4y6j?module=%2Fsrc%2Fcomponents%2FAvatar.vue)
 
 ## License
 
