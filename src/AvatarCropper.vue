@@ -179,7 +179,7 @@
 
           reader.readAsDataURL(fileInput.files[0])
 
-          this.filename = fileInput.files[0].fileName || 'unknown'
+          this.filename = fileInput.files[0].name || 'unknown'
           this.$emit('changed', fileInput.files[0], reader)
         }
       })
