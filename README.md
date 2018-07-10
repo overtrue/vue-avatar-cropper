@@ -4,7 +4,7 @@
 
 ![image](https://user-images.githubusercontent.com/1472352/28398207-b32907b0-6d38-11e7-998a-32d34362b341.png)
 
-[![Edit vue-avatar-cropper-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/9lo653jpz4)
+[![Edit Vue Template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/nn8xrn4y6j)
 
 ## Installing
 
@@ -130,7 +130,7 @@ You can listen these events like this:
 
 :rocket: There is an online demo:
 
-[![Edit vue-avatar-cropper-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/9lo653jpz4)
+[![Edit Vue Template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/nn8xrn4y6j)
 
 ## License
 
