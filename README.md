@@ -70,6 +70,10 @@ $  npm i vue-avatar-cropper
 
 ### Events
 
+- **changed** user picked a file
+    - `file` object, [File](https://developer.mozilla.org/zh-CN/docs/Web/API/File) object.
+    - `reader` object, [FileReader](https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader)
+
 - **submit** right after a click on the submit button
 
 - **uploading** before submit upload request, params:
