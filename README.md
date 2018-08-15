@@ -53,7 +53,7 @@ $  npm i vue-avatar-cropper
  `upload-url` | String | Url of upload croppped image
  `upload-form-name` | Object | Form name of upload request, default: 'file'
  `upload-form-data` | Object | Additional form data, default: '{}'
- `upload-handler` | Function | Handler to replace default upload handler
+ `upload-handler` | Function | Handler to replace default upload handler, the argument is [cropperJS](https://github.com/fengyuanchen/cropperjs) instance.
  `upload-headers` | Object | Headers of upload request, default: `{}`
  `cropper-options` | Object | Options passed to the [cropperJS](https://github.com/fengyuanchen/cropperjs#options) instance, <br>default: `{` 
    | | |    `aspectRatio: 1, `
