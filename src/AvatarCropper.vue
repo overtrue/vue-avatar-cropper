@@ -32,6 +32,10 @@
       uploadUrl: {
         type: String,
       },
+      requestMethod: {
+        type: String,
+        default: 'POST'
+      },
       uploadHeaders: {
         type: Object,
       },
@@ -132,7 +136,7 @@
 
           this.$emit('uploading', form, xhr)
 
-          xhr.open('POST', this.uploadUrl, true)
+          xhr.open(this.requestMethod, this.uploadUrl, true)
 
           for (let header in this.uploadHeaders) {
             xhr.setRequestHeader(header, this.uploadHeaders[header])
