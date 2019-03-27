@@ -38,7 +38,7 @@
     "vue-loader": "^15.4.2",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.4.2",
-    "webpack": "^2.2.1"
+    "webpack": "^4.29.6"
   },
   "author": "overtrue",
   "license": "MIT",
