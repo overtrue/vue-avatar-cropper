@@ -143,8 +143,10 @@ export default {
       }
       this.destroy()
     },
-    pickImage() {
+    pickImage(e) {
       this.$refs.input.click()
+      e.preventDefault()
+      e.stopPropagation()
     },
     createCropper() {
       this.cropper = new Cropper(this.$refs.img, this.cropperOptions)
