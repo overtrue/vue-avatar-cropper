@@ -1,7 +1,7 @@
 {
   "name": "vue-avatar-cropper",
   "description": "A simple and elegant avatar cropping and upload plugin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "./dist/index.js",
   "dependencies": {},
   "scripts": {
