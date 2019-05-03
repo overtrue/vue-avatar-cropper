@@ -89,13 +89,7 @@ export default {
       }
     },
     outputOptions: {
-      type: Object,
-      default() {
-        return {
-          width: 512,
-          height: 512
-        }
-      }
+      type: Object
     },
     outputMime: {
       type: String,
