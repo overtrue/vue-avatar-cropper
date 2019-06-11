@@ -27,7 +27,7 @@
   "devDependencies": {
     "cropperjs": "^1.0.0",
     "cross-env": "^5.2.0",
-    "css-loader": "^2.1.1",
+    "css-loader": "^3.0.0",
     "laravel-mix": "^4.0.15",
     "node-sass": "^4.9.2",
     "sass-loader": "^7.1.0",
