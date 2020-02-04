@@ -63,7 +63,7 @@ $  npm i vue-avatar-cropper
    | | |    `zoomable: false`
    | | |    `}`
  `output-options` | Object | Options passed to the [cropper.getCroppedCanvas()](https://github.com/fengyuanchen/cropperjs#getcroppedcanvasoptions) method, <br>default: `{width: 512, height: 512}`
- `output-mime` | String | The resulting avatar image mime type, default: `image/jpeg`
+ `output-mime` | String | The resulting avatar image mime type, default: `null`
  `output-quality` | Number | The resulting avatar image quality [0 - 1], default: `0.9`<br>(if the output-mime property is `image/jpeg` or `image/webp`)
  `mimes` | String | Allowed image formats, default: <br>`image/png, image/gif, image/jpeg, image/bmp, image/x-icon`
  `labels` | Object | Label for buttons, default: `{ submit: "提交", cancel: "取消"}`
