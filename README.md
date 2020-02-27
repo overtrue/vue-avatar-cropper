@@ -67,6 +67,7 @@ $  npm i vue-avatar-cropper
  `output-quality` | Number | The resulting avatar image quality [0 - 1], default: `0.9`<br>(if the output-mime property is `image/jpeg` or `image/webp`)
  `mimes` | String | Allowed image formats, default: <br>`image/png, image/gif, image/jpeg, image/bmp, image/x-icon`
  `labels` | Object | Label for buttons, default: `{ submit: "提交", cancel: "取消"}`
+ `withCredentials` | Boolean | The `withCredentials` property that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates, default: `false`
 
 ### Events
 

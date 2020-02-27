@@ -111,6 +111,10 @@ export default {
           cancel: '取消'
         }
       }
+    },
+    withCredentials: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -151,6 +155,8 @@ export default {
           let form = new FormData()
           let xhr = new XMLHttpRequest()
           let data = Object.assign({}, this.uploadFormData)
+
+          xhr.withCredentials = this.withCredentials;
 
           for (let key in data) {
             form.append(key, data[key])
