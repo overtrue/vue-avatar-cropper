@@ -62,7 +62,7 @@ $  npm i vue-avatar-cropper
    | | |    `movable: false,`
    | | |    `zoomable: false`
    | | |    `}`
- `output-options` | Object | Options passed to the [cropper.getCroppedCanvas()](https://github.com/fengyuanchen/cropperjs#getcroppedcanvasoptions) method, <br>default: `{width: 512, height: 512}`
+ `output-options` | Object | Options passed to the [cropper.getCroppedCanvas()](https://github.com/fengyuanchen/cropperjs#getcroppedcanvasoptions) method, <br>default: `{}`. Recommended use-case is specifying an output size, for instance: `{width: 512, height: 512}`
  `output-mime` | String | The resulting avatar image mime type, default: `null`
  `output-quality` | Number | The resulting avatar image quality [0 - 1], default: `0.9`<br>(if the output-mime property is `image/jpeg` or `image/webp`)
  `mimes` | String | Allowed image formats, default: <br>`image/png, image/gif, image/jpeg, image/bmp, image/x-icon`
