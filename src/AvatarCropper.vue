@@ -6,8 +6,9 @@
     >
       <div class="avatar-cropper-mark">
         <a
-          @click="destroy"
+          @click="cancel"
           class="avatar-cropper-close"
+          :title="labels.cancel"
           href="javascript:;"
         >&times;</a>
       </div>
@@ -22,7 +23,7 @@
         </div>
         <div class="avatar-cropper-footer">
           <button
-            @click.stop.prevent="destroy"
+            @click.stop.prevent="cancel"
             class="avatar-cropper-btn"
             v-text="labels.cancel"
           >Cancel</button>
@@ -140,6 +141,10 @@ export default {
         this.$emit('error', 'No upload handler found.', 'user')
       }
       this.destroy()
+    },
+    cancel(){
+        this.$emit('cancel')
+        this.destroy();
     },
     pickImage(e) {
       this.$refs.input.click()
