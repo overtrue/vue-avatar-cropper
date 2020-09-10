@@ -2256,9 +2256,9 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     sha.js "^2.4.8"
 
 cropperjs@^1.0.0:
-  version "1.5.8"
-  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-1.5.8.tgz#cd5f1fcc1043dfc70c54455fbe26b02d2b077ac0"
-  integrity sha512-Q97kxr4hNhIhxlgyQ2Z/TEA6GEYsk+UfT2OltqZugciNjkPJ2rBwu17MgvI3exjiYmGAFdudIV8grMqhsYzKZw==
+  version "1.5.9"
+  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-1.5.9.tgz#4ff9d31e02ad04d2fc5df0044207c2ad53d99da8"
+  integrity sha512-aPWlg43sLIcYN4GBXIdyvM09wNPgn1ug+vNVwV8jlb3dbgEX/B34Iw6hrjGSajkUDQBmaCi6uPOevFb7N0yUsw==
 
 cross-env@^7.0.0:
   version "7.0.2"
