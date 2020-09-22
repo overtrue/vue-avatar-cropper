@@ -2,9 +2,10 @@
   <div class="avatar-cropper">
     <div
       class="avatar-cropper-overlay"
+      :class="{'avatar-cropper-overlay-inline': inline}"
       v-if="dataUrl"
     >
-      <div class="avatar-cropper-mark">
+      <div class="avatar-cropper-mark" v-if="!inline">
         <a
           @click="cancel"
           class="avatar-cropper-close"
@@ -116,6 +117,10 @@ export default {
     withCredentials: {
       type: Boolean,
       default: false
+    },
+    inline: {
+      type: Boolean,
+      default: false,
     }
   },
   data() {
@@ -251,6 +256,9 @@ export default {
     right: 0;
     bottom: 0;
     z-index: 99999;
+  }
+  .avatar-cropper-overlay-inline{
+     position: initial;
   }
 
   .avatar-cropper-img-input {

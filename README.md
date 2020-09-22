@@ -68,7 +68,8 @@ $  npm i vue-avatar-cropper
  `mimes` | String | Allowed image formats, default: <br>`image/png, image/gif, image/jpeg, image/bmp, image/x-icon`
  `labels` | Object | Label for buttons, default: `{ submit: "提交", cancel: "取消"}`
  `withCredentials` | Boolean | The `withCredentials` property that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates, default: `false`
-
+ `inline` | Boolean | If true component will be displayed as inline elemenet, default: `false`
+ 
 ### Events
 
 - **changed** user picked a file
