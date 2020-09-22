@@ -222,6 +222,11 @@ export default {
     let fileInput = this.$refs.input
     fileInput.addEventListener('change', () => {
       if (fileInput.files != null && fileInput.files[0] != null) {
+        let correctType = this.mimes.split(', ').find(m => m === fileInput.files[0].type);
+        if (!correctType) {
+          this.$emit('error', 'File type not correct.', 'user');
+          return;
+        }
         let reader = new FileReader()
         reader.onload = e => {
           this.dataUrl = e.target.result
