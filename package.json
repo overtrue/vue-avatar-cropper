@@ -28,7 +28,7 @@
     "cropperjs": "^1.0.0",
     "cross-env": "^7.0.0",
     "css-loader": "^5.0.0",
-    "laravel-mix": "^5.0.0",
+    "laravel-mix": "^6.0.0",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.0.0",
     "style-loader": "^2.0.0",
