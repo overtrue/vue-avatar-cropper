@@ -132,7 +132,9 @@ export default {
   },
   methods: {
     destroy() {
-      this.cropper.destroy()
+      if (this.cropper) {
+        this.cropper.destroy()
+      }
       this.$refs.input.value = ''
       this.dataUrl = undefined
     },
