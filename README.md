@@ -6,46 +6,63 @@
 
 [![Edit test-project](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/overtrue/vue-avatar-cropper-demo/tree/master/)
 
+## Basic usage
+
+```html
+<avatar-cropper
+    @uploaded="handleUploaded"
+    trigger="#pick-avatar"
+    upload-url="/files/upload" 
+/>
+```
+
+
 ## Installing
 
-```shell
-$  npm i vue-avatar-cropper
-```
+### Browsers
 
-## Usage
+1. Include the link to AvatarCropper in `<head>` alongside Vue.js:
 
-```vue
-<template>
-  <div class="text-center">
-    <img v-if="userAvatar" :src="userAvatar">
-    <button id="pick-avatar">Select an image</button>
-    <avatar-cropper
-      @uploaded="handleUploaded"
-      trigger="#pick-avatar"
-      upload-url="/files/upload" />
-  </div>
-</template>
+   ```html
+   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vue-avatar-cropper"></script>
+   ```
+  
+2. AvatarCropper will auto-install upon detecting the global Vue instance. You can use
+   it right away.
 
-<script>
-  import AvatarCropper from "vue-avatar-cropper"
+### Node environment
 
-  export default {
-    components: { AvatarCropper },
-    data() {
-      return {
-          userAvatar: undefined,
-      }
-    },
-    methods: {
-      handleUploaded(resp) {
-        this.userAvatar = resp.relative_url;
-      }
-    }
-  }
-</script>
-```
+1. Install the AvatarCropper package:
 
-### Properties
+   ```sh
+   npm install vue-avatar-cropper
+   # or
+   yarn add vue-avatar-cropper
+   ```
+
+2. Register it as you usually would:
+
+   ```js
+   import AvatarCropper from "vue-avatar-cropper";
+   
+   // or
+   const AvatarCropper = require('vue-avatar-cropper');
+
+
+   Vue.component('AvatarCropper', AvatarCropper);
+   
+   //or
+   Vue.use(AvatarCropper);
+   
+   //or
+   new Vue({
+       components: { AvatarCropper },
+       // ... 
+   });
+   ```
+
+### Props
 
  Property Name | Type | Description
  -------- | -------- | --------
@@ -114,7 +131,8 @@ You can listen these events like this:
 ```
 
 ```js
-    ...
+export default {
+    //...
     methods: {
         ...
         handleUploading(form, xhr) {
@@ -131,9 +149,8 @@ You can listen these events like this:
             // xhr.response...
           }
         }
-        ...
-    }
-    ...
+    },
+}
 ```
 
 :rocket: There is an online demo:

@@ -46,10 +46,11 @@
 </template>
 
 <script>
-import 'cropperjs/dist/cropper.css'
+import CropperCSS from 'cropperjs/dist/cropper.css';
 import Cropper from 'cropperjs'
 
 export default {
+  name: 'AvatarCropper',
   props: {
     trigger: {
       type: [String, Element],

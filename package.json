@@ -1,0 +1,94 @@
+{
+  "name": "vue-avatar-cropper",
+  "description": "A simple and elegant avatar cropping and upload plugin",
+  "version": "1.0.9",
+  "main": "./dist/vue-avatar-cropper.umd.js",
+  "module": "./dist/vue-avatar-cropper.esm.js",
+  "unpkg": "./dist/vue-avatar-cropper.umd.js",
+  "exports": {
+    "require": "./dist/vue-avatar-cropper.umd.js",
+    "import": "./dist/vue-avatar-cropper.esm.js"
+  },
+  "browser": {
+    "./sfc": "src/vue-avatar-cropper.vue"
+  },
+  "files": [
+    "dist/vue-avatar-cropper.umd.js",
+    "dist/vue-avatar-cropper.esm.js",
+    "src/vue-avatar-cropper.vue"
+  ],
+  "scripts": {
+    "build": "cross-env NODE_ENV=production rollup -c",
+    "dev:build": "rollup -c -w --no-watch.clearScreen",
+    "dev:serve": "sirv ./dev -s -D -p 8629",
+    "dev": "run-p dev:*",
+    "test:lint": "eslint .",
+    "test:size": "size-limit",
+    "pretest": "run-s build",
+    "test": "run-p --aggregate-output test:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/overtrue/vue-avatar-cropper.git"
+  },
+  "keywords": [
+    "vue",
+    "cropper",
+    "vue-cropper",
+    "vue-avatar",
+    "avatar-cropper",
+    "vue-avatar-cropper"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/preset-env": "^7.13.15",
+    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@size-limit/preset-small-lib": "^4.10.2",
+    "autoprefixer": "^9.8.4",
+    "cropperjs": "^1.0.0",
+    "cross-env": "^7.0.2",
+    "css-loader": "^5.0.0",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.1",
+    "rollup": "^2.18.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-styles": "^3.14.1",
+    "rollup-plugin-terser": "^6.1.0",
+    "rollup-plugin-vue": "^5.1.9",
+    "sass": "^1.32.11",
+    "sass-loader": "^11.0.0",
+    "sirv-cli": "^1.0.1",
+    "size-limit": "^4.5.2",
+    "style-loader": "^2.0.0",
+    "vue": "^2.4.2",
+    "vue-eslint-parser": "^7.1.0",
+    "vue-html-loader": "^1.2.4",
+    "vue-loader": "^16.1.1",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.4.2"
+  },
+  "author": {
+    "name": "overtrue",
+    "email": "i@overtrue.me",
+    "url": "https://overtrue.me"
+  },
+  "size-limit": [
+    {
+      "path": "dist/tinybox.umd.js",
+      "limit": "3333 B",
+      "webpack": false
+    },
+    {
+      "path": "dist/tinybox.esm.js",
+      "limit": "3333 B"
+    }
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/overtrue/vue-avatar-cropper/issues"
+  },
+  "homepage": "https://github.com/overtrue/vue-avatar-cropper#readme"
+}
