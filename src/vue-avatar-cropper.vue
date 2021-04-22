@@ -2,7 +2,7 @@
   <div class="avatar-cropper">
     <div
       class="avatar-cropper-overlay"
-      :class="{'avatar-cropper-overlay-inline': inline}"
+      :class="{ 'avatar-cropper-overlay-inline': inline }"
       v-if="dataUrl"
     >
       <div class="avatar-cropper-mark" v-if="!inline">
@@ -11,28 +11,28 @@
           class="avatar-cropper-close"
           :title="labels.cancel"
           href="javascript:;"
-        >&times;</a>
+          >&times;</a
+        >
       </div>
       <div class="avatar-cropper-container">
         <div class="avatar-cropper-image-container">
-          <img
-            :src="dataUrl"
-            @load.stop="createCropper"
-            alt
-            ref="img"
-          >
+          <img :src="dataUrl" @load.stop="createCropper" alt ref="img" />
         </div>
         <div class="avatar-cropper-footer">
           <button
             @click.stop.prevent="cancel"
             class="avatar-cropper-btn"
             v-text="labels.cancel"
-          >Cancel</button>
+          >
+            Cancel
+          </button>
           <button
             @click.stop.prevent="submit"
             class="avatar-cropper-btn"
             v-text="labels.submit"
-          >Submit</button>
+          >
+            Submit
+          </button>
         </div>
       </div>
     </div>
@@ -41,43 +41,43 @@
       class="avatar-cropper-img-input"
       ref="input"
       type="file"
-    >
+    />
   </div>
 </template>
 
 <script>
-import CropperCSS from 'cropperjs/dist/cropper.css';
-import Cropper from 'cropperjs'
+import CropperCSS from "cropperjs/dist/cropper.css";
+import Cropper from "cropperjs";
 
 export default {
-  name: 'AvatarCropper',
+  name: "AvatarCropper",
   props: {
     trigger: {
       type: [String, Element],
-      required: true
+      required: true,
     },
     uploadHandler: {
-      type: Function
+      type: Function,
     },
     uploadUrl: {
-      type: String
+      type: String,
     },
     requestMethod: {
       type: String,
-      default: 'POST'
+      default: "POST",
     },
     uploadHeaders: {
-      type: Object
+      type: Object,
     },
     uploadFormName: {
       type: String,
-      default: 'file'
+      default: "file",
     },
     uploadFormData: {
       type: Object,
       default() {
-        return {}
-      }
+        return {};
+      },
     },
     cropperOptions: {
       type: Object,
@@ -87,163 +87,165 @@ export default {
           autoCropArea: 1,
           viewMode: 1,
           movable: false,
-          zoomable: false
-        }
-      }
+          zoomable: false,
+        };
+      },
     },
     outputOptions: {
-      type: Object
+      type: Object,
     },
     outputMime: {
       type: String,
-      default: null
+      default: null,
     },
     outputQuality: {
       type: Number,
-      default: 0.9
+      default: 0.9,
     },
     mimes: {
       type: String,
-      default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
+      default: "image/png, image/gif, image/jpeg, image/bmp, image/x-icon",
     },
     labels: {
       type: Object,
       default() {
         return {
-          submit: '提交',
-          cancel: '取消'
-        }
-      }
+          submit: "Загрузить",
+          cancel: "Отменить",
+        };
+      },
     },
     withCredentials: {
       type: Boolean,
-      default: false
+      default: false,
     },
     inline: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   data() {
     return {
       cropper: undefined,
       dataUrl: undefined,
-      filename: undefined
-    }
+      filename: undefined,
+    };
   },
   methods: {
     destroy() {
       if (this.cropper) {
-        this.cropper.destroy()
+        this.cropper.destroy();
       }
-      this.$refs.input.value = ''
-      this.dataUrl = undefined
+      this.$refs.input.value = "";
+      this.dataUrl = undefined;
     },
     submit() {
-      this.$emit('submit')
+      this.$emit("submit");
       if (this.uploadUrl) {
-        this.uploadImage()
+        this.uploadImage();
       } else if (this.uploadHandler) {
-        this.uploadHandler(this.cropper)
+        this.uploadHandler(this.cropper);
       } else {
-        this.$emit('error', 'No upload handler found.', 'user')
+        this.$emit("error", "No upload handler found.", "user");
       }
-      this.destroy()
+      this.destroy();
     },
-    cancel(){
-        this.$emit('cancel')
-        this.destroy();
+    cancel() {
+      this.$emit("cancel");
+      this.destroy();
     },
     pickImage(e) {
-      this.$refs.input.click()
-      e.preventDefault()
-      e.stopPropagation()
+      this.$refs.input.click();
+      e.preventDefault();
+      e.stopPropagation();
     },
     createCropper() {
-      this.cropper = new Cropper(this.$refs.img, this.cropperOptions)
+      this.cropper = new Cropper(this.$refs.img, this.cropperOptions);
     },
     uploadImage() {
       this.cropper.getCroppedCanvas(this.outputOptions).toBlob(
-        blob => {
-          let form = new FormData()
-          let xhr = new XMLHttpRequest()
-          let data = Object.assign({}, this.uploadFormData)
+        (blob) => {
+          let form = new FormData();
+          let xhr = new XMLHttpRequest();
+          let data = Object.assign({}, this.uploadFormData);
 
           xhr.withCredentials = this.withCredentials;
 
           for (let key in data) {
-            form.append(key, data[key])
+            form.append(key, data[key]);
           }
 
-          form.append(this.uploadFormName, blob, this.filename)
+          form.append(this.uploadFormName, blob, this.filename);
 
-          this.$emit('uploading', form, xhr)
+          this.$emit("uploading", form, xhr);
 
-          xhr.open(this.requestMethod, this.uploadUrl, true)
+          xhr.open(this.requestMethod, this.uploadUrl, true);
 
           for (let header in this.uploadHeaders) {
-            xhr.setRequestHeader(header, this.uploadHeaders[header])
+            xhr.setRequestHeader(header, this.uploadHeaders[header]);
           }
 
           xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-              let response = ''
+              let response = "";
               try {
-                response = JSON.parse(xhr.responseText)
+                response = JSON.parse(xhr.responseText);
               } catch (err) {
-                response = xhr.responseText
+                response = xhr.responseText;
               }
-              this.$emit('completed', response, form, xhr)
+              this.$emit("completed", response, form, xhr);
 
               if ([200, 201, 204].indexOf(xhr.status) > -1) {
-                this.$emit('uploaded', response, form, xhr)
+                this.$emit("uploaded", response, form, xhr);
               } else {
-                this.$emit('error', 'Image upload fail.', 'upload', xhr)
+                this.$emit("error", "Image upload fail.", "upload", xhr);
               }
             }
-          }
-          xhr.send(form)
+          };
+          xhr.send(form);
         },
         this.outputMime,
         this.outputQuality
-      )
-    }
+      );
+    },
   },
   mounted() {
     // listen for click event on trigger
     let trigger =
-      typeof this.trigger == 'object'
+      typeof this.trigger == "object"
         ? this.trigger
-        : document.querySelector(this.trigger)
+        : document.querySelector(this.trigger);
     if (!trigger) {
-      this.$emit('error', 'No avatar make trigger found.', 'user')
+      this.$emit("error", "No avatar make trigger found.", "user");
     } else {
-      trigger.addEventListener('click', this.pickImage)
+      trigger.addEventListener("click", this.pickImage);
     }
 
     // listen for input file changes
-    let fileInput = this.$refs.input
-    fileInput.addEventListener('change', () => {
+    let fileInput = this.$refs.input;
+    fileInput.addEventListener("change", () => {
       if (fileInput.files != null && fileInput.files[0] != null) {
-        let correctType = this.mimes.split(', ').find(m => m === fileInput.files[0].type);
+        let correctType = this.mimes
+          .split(", ")
+          .find((m) => m === fileInput.files[0].type);
         if (!correctType) {
-          this.$emit('error', 'File type not correct.', 'user');
+          this.$emit("error", "File type not correct.", "user");
           return;
         }
-        let reader = new FileReader()
-        reader.onload = e => {
-          this.dataUrl = e.target.result
-        }
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.dataUrl = e.target.result;
+        };
 
-        reader.readAsDataURL(fileInput.files[0])
+        reader.readAsDataURL(fileInput.files[0]);
 
-        this.filename = fileInput.files[0].name || 'unknown'
-        this.mimeType = this.mimeType || fileInput.files[0].type
-        this.$emit('changed', fileInput.files[0], reader)
+        this.filename = fileInput.files[0].name || "unknown";
+        this.mimeType = this.mimeType || fileInput.files[0].type;
+        this.$emit("changed", fileInput.files[0], reader);
       }
-    })
-  }
-}
+    });
+  },
+};
 </script>
 
 <style lang="scss">
@@ -260,8 +262,8 @@ export default {
     bottom: 0;
     z-index: 99999;
   }
-  .avatar-cropper-overlay-inline{
-     position: initial;
+  .avatar-cropper-overlay-inline {
+    position: initial;
   }
 
   .avatar-cropper-img-input {
