@@ -56,7 +56,7 @@
     "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-vue": "^5.1.9",
     "sass": "^1.32.11",
-    "sass-loader": "^11.0.0",
+    "sass-loader": "^10.1.1",
     "sirv-cli": "^1.0.1",
     "size-limit": "^4.5.2",
     "style-loader": "^2.0.0",
