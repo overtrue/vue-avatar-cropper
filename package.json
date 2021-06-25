@@ -59,7 +59,7 @@
     "sass-loader": "^12.1.0",
     "sirv-cli": "^1.0.1",
     "size-limit": "^4.5.2",
-    "style-loader": "^2.0.0",
+    "style-loader": "^3.0.0",
     "vue": "^2.4.2",
     "vue-eslint-parser": "^7.1.0",
     "vue-html-loader": "^1.2.4",
