@@ -68,7 +68,7 @@
  -------- | -------- | --------
  `trigger` | String\|Element | The element to trigger avatar pick
  `upload-url` | String | Url of upload croppped image
- `upload-form-name` | Object | Form name of upload request, default: 'file'
+ `upload-form-name` | String | Form name of upload request, default: 'file'
  `upload-form-data` | Object | Additional form data, default: '{}'
  `upload-handler` | Function | Handler to replace default upload handler, the argument is [cropperJS](https://github.com/fengyuanchen/cropperjs) instance.
  `upload-headers` | Object | Headers of upload request, default: `{}`
