@@ -297,7 +297,7 @@ export default {
     z-index: 99999;
   }
   .avatar-cropper-overlay-inline{
-     position: initial;
+    position: initial;
   }
 
   .avatar-cropper-img-input {
