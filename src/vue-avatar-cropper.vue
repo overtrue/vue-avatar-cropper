@@ -128,7 +128,8 @@ export default {
     return {
       cropper: undefined,
       dataUrl: undefined,
-      filename: undefined
+      filename: undefined,
+      triggerEl: undefined
     }
   },
   methods: {
@@ -158,6 +159,25 @@ export default {
       this.$refs.input.click()
       e.preventDefault()
       e.stopPropagation()
+    },
+    onFileInputChange() {
+      if (fileInput.files != null && fileInput.files[0] != null) {
+        let correctType = this.mimes.split(', ').find(m => m === fileInput.files[0].type);
+        if (!correctType) {
+          this.$emit('error', 'File type not correct.', 'user');
+          return;
+        }
+        let reader = new FileReader()
+        reader.onload = e => {
+          this.dataUrl = e.target.result
+        }
+
+        reader.readAsDataURL(fileInput.files[0])
+
+        this.filename = fileInput.files[0].name || 'unknown'
+        this.mimeType = this.mimeType || fileInput.files[0].type
+        this.$emit('changed', fileInput.files[0], reader)
+      }
     },
     createCropper() {
       this.cropper = new Cropper(this.$refs.img, this.cropperOptions)
@@ -211,37 +231,24 @@ export default {
   },
   mounted() {
     // listen for click event on trigger
-    let trigger =
-      typeof this.trigger == 'object'
+    this.triggerEl =
+      typeof this.trigger === 'object'
         ? this.trigger
         : document.querySelector(this.trigger)
-    if (!trigger) {
+    if (!this.triggerEl) {
       this.$emit('error', 'No avatar make trigger found.', 'user')
     } else {
-      trigger.addEventListener('click', this.pickImage)
+      this.triggerEl.addEventListener('click', this.pickImage)
     }
 
     // listen for input file changes
     let fileInput = this.$refs.input
-    fileInput.addEventListener('change', () => {
-      if (fileInput.files != null && fileInput.files[0] != null) {
-        let correctType = this.mimes.split(', ').find(m => m === fileInput.files[0].type);
-        if (!correctType) {
-          this.$emit('error', 'File type not correct.', 'user');
-          return;
-        }
-        let reader = new FileReader()
-        reader.onload = e => {
-          this.dataUrl = e.target.result
-        }
-
-        reader.readAsDataURL(fileInput.files[0])
-
-        this.filename = fileInput.files[0].name || 'unknown'
-        this.mimeType = this.mimeType || fileInput.files[0].type
-        this.$emit('changed', fileInput.files[0], reader)
-      }
-    })
+    fileInput.addEventListener('change', this.onFileInputChange)
+  },
+  beforeDestroy() {
+    let fileInput = this.$refs.input
+    if (this.triggerEl) this.triggerEl.removeEventListener('click', this.pickImage)
+    if (fileInput) fileInput.removeEventListener('change', this.onFileInputChange)
   }
 }
 </script>
