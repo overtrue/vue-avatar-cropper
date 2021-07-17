@@ -46,39 +46,47 @@
 </template>
 
 <script>
-import CropperCSS from 'cropperjs/dist/cropper.css';
+import 'cropperjs/dist/cropper.css';
 import Cropper from 'cropperjs'
 
 export default {
   name: 'AvatarCropper',
+
   props: {
     trigger: {
       type: [String, Element],
       required: true
     },
+
     uploadHandler: {
       type: Function
     },
+
     uploadUrl: {
       type: String
     },
+
     requestMethod: {
       type: String,
       default: 'POST'
     },
+
     uploadHeaders: {
       type: Object
     },
+
     uploadFormName: {
       type: String,
       default: 'file'
     },
+
     uploadFormData: {
       type: Object,
       default() {
         return {}
       }
     },
+
     cropperOptions: {
       type: Object,
       default() {
@@ -91,9 +99,11 @@ export default {
         }
       }
     },
+
     outputOptions: {
       type: Object
     },
+
     outputMime: {
       type: String,
       default: null
@@ -102,10 +112,12 @@ export default {
       type: Number,
       default: 0.9
     },
+
     mimes: {
       type: String,
       default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
     },
+
     labels: {
       type: Object,
       default() {
@@ -115,15 +127,18 @@ export default {
         }
       }
     },
+
     withCredentials: {
       type: Boolean,
       default: false
     },
+
     inline: {
       type: Boolean,
       default: false,
     }
   },
+
   data() {
     return {
       cropper: undefined,
@@ -132,16 +147,18 @@ export default {
       triggerEl: undefined
     }
   },
+
   methods: {
     destroy() {
-      if (this.cropper) {
-        this.cropper.destroy()
-      }
+      if (this.cropper) this.cropper.destroy()
+
       this.$refs.input.value = ''
       this.dataUrl = undefined
     },
+
     submit() {
       this.$emit('submit')
+
       if (this.uploadUrl) {
         this.uploadImage()
       } else if (this.uploadHandler) {
@@ -149,26 +166,31 @@ export default {
       } else {
         this.$emit('error', 'No upload handler found.', 'user')
       }
+
       this.destroy()
     },
+
     cancel(){
         this.$emit('cancel')
-        this.destroy();
+        this.destroy()
     },
+
     pickImage(e) {
       this.$refs.input.click()
       e.preventDefault()
       e.stopPropagation()
     },
+
     onFileInputChange() {
+      const fileInput = this.$refs.input
       if (fileInput.files != null && fileInput.files[0] != null) {
-        let correctType = this.mimes.split(', ').find(m => m === fileInput.files[0].type);
+        const correctType = this.mimes.split(', ').find((mime) => mime === fileInput.files[0].type);
         if (!correctType) {
           this.$emit('error', 'File type not correct.', 'user');
           return;
         }
-        let reader = new FileReader()
-        reader.onload = e => {
+        const reader = new FileReader()
+        reader.onload = (e) => {
           this.dataUrl = e.target.result
         }
 
@@ -179,19 +201,21 @@ export default {
         this.$emit('changed', fileInput.files[0], reader)
       }
     },
+
     createCropper() {
       this.cropper = new Cropper(this.$refs.img, this.cropperOptions)
     },
+
     uploadImage() {
       this.cropper.getCroppedCanvas(this.outputOptions).toBlob(
-        blob => {
-          let form = new FormData()
-          let xhr = new XMLHttpRequest()
-          let data = Object.assign({}, this.uploadFormData)
+        (blob) => {
+          const form = new FormData()
+          const xhr = new XMLHttpRequest()
+          const data = Object.assign({}, this.uploadFormData)
 
           xhr.withCredentials = this.withCredentials;
 
-          for (let key in data) {
+          for (const key in data) {
             form.append(key, data[key])
           }
 
@@ -201,18 +225,20 @@ export default {
 
           xhr.open(this.requestMethod, this.uploadUrl, true)
 
-          for (let header in this.uploadHeaders) {
+          for (const header in this.uploadHeaders) {
             xhr.setRequestHeader(header, this.uploadHeaders[header])
           }
 
           xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
               let response = ''
+
               try {
                 response = JSON.parse(xhr.responseText)
               } catch (err) {
                 response = xhr.responseText
               }
+
               this.$emit('completed', response, form, xhr)
 
               if ([200, 201, 204].indexOf(xhr.status) > -1) {
@@ -222,6 +248,7 @@ export default {
               }
             }
           }
+
           xhr.send(form)
         },
         this.outputMime,
@@ -229,6 +256,7 @@ export default {
       )
     }
   },
+
   mounted() {
     // listen for click event on trigger
     this.triggerEl =
@@ -242,11 +270,12 @@ export default {
     }
 
     // listen for input file changes
-    let fileInput = this.$refs.input
+    const fileInput = this.$refs.input
     fileInput.addEventListener('change', this.onFileInputChange)
   },
+
   beforeDestroy() {
-    let fileInput = this.$refs.input
+    const fileInput = this.$refs.input
     if (this.triggerEl) this.triggerEl.removeEventListener('click', this.pickImage)
     if (fileInput) fileInput.removeEventListener('change', this.onFileInputChange)
   }
