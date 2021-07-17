@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import 'cropperjs/dist/cropper.css';
+import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
 
 export default {
@@ -55,36 +55,36 @@ export default {
   props: {
     trigger: {
       type: [String, Element],
-      required: true
+      required: true,
     },
 
     uploadHandler: {
-      type: Function
+      type: Function,
     },
 
     uploadUrl: {
-      type: String
+      type: String,
     },
 
     requestMethod: {
       type: String,
-      default: 'POST'
+      default: 'POST',
     },
 
     uploadHeaders: {
-      type: Object
+      type: Object,
     },
 
     uploadFormName: {
       type: String,
-      default: 'file'
+      default: 'file',
     },
 
     uploadFormData: {
       type: Object,
       default() {
         return {}
-      }
+      },
     },
 
     cropperOptions: {
@@ -95,27 +95,27 @@ export default {
           autoCropArea: 1,
           viewMode: 1,
           movable: false,
-          zoomable: false
+          zoomable: false,
         }
-      }
+      },
     },
 
     outputOptions: {
-      type: Object
+      type: Object,
     },
 
     outputMime: {
       type: String,
-      default: null
+      default: null,
     },
     outputQuality: {
       type: Number,
-      default: 0.9
+      default: 0.9,
     },
 
     mimes: {
       type: String,
-      default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
+      default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon',
     },
 
     labels: {
@@ -123,20 +123,20 @@ export default {
       default() {
         return {
           submit: '提交',
-          cancel: '取消'
+          cancel: '取消',
         }
-      }
+      },
     },
 
     withCredentials: {
       type: Boolean,
-      default: false
+      default: false,
     },
 
     inline: {
       type: Boolean,
       default: false,
-    }
+    },
   },
 
   data() {
@@ -144,7 +144,7 @@ export default {
       cropper: undefined,
       dataUrl: undefined,
       filename: undefined,
-      triggerEl: undefined
+      triggerEl: undefined,
     }
   },
 
@@ -184,10 +184,10 @@ export default {
     onFileInputChange() {
       const fileInput = this.$refs.input
       if (fileInput.files != null && fileInput.files[0] != null) {
-        const correctType = this.mimes.split(', ').find((mime) => mime === fileInput.files[0].type);
+        const correctType = this.mimes.split(', ').find((mime) => mime === fileInput.files[0].type)
         if (!correctType) {
-          this.$emit('error', 'File type not correct.', 'user');
-          return;
+          this.$emit('error', 'File type not correct.', 'user')
+          return
         }
         const reader = new FileReader()
         reader.onload = (e) => {
@@ -213,7 +213,7 @@ export default {
           const xhr = new XMLHttpRequest()
           const data = Object.assign({}, this.uploadFormData)
 
-          xhr.withCredentials = this.withCredentials;
+          xhr.withCredentials = this.withCredentials
 
           for (const key in data) {
             form.append(key, data[key])
@@ -252,9 +252,9 @@ export default {
           xhr.send(form)
         },
         this.outputMime,
-        this.outputQuality
+        this.outputQuality,
       )
-    }
+    },
   },
 
   mounted() {
@@ -278,7 +278,7 @@ export default {
     const fileInput = this.$refs.input
     if (this.triggerEl) this.triggerEl.removeEventListener('click', this.pickImage)
     if (fileInput) fileInput.removeEventListener('change', this.onFileInputChange)
-  }
+  },
 }
 </script>
 

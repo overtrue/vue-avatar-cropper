@@ -1,17 +1,18 @@
-import babel from 'rollup-plugin-babel';
-import resolve from '@rollup/plugin-node-resolve';
-import { terser } from 'rollup-plugin-terser';
-import styles from "rollup-plugin-styles";
-import vue from 'rollup-plugin-vue';
+import babel from 'rollup-plugin-babel'
+import resolve from '@rollup/plugin-node-resolve'
+import { terser } from 'rollup-plugin-terser'
+import styles from 'rollup-plugin-styles'
+import vue from 'rollup-plugin-vue'
 
-import autoprefixer from 'autoprefixer';
+import autoprefixer from 'autoprefixer'
 
-const name = 'vue-avatar-cropper';
-const outFilename = (infix) => `./dist/vue-avatar-cropper.${infix}.js`;
+const name = 'vue-avatar-cropper'
+const outFilename = (infix) => `./dist/vue-avatar-cropper.${infix}.js`
 
-const production = process.env.NODE_ENV === 'production' && !process.env.ROLLUP_WATCH;
+/* eslint-disable-next-line no-undef */
+const production = process.env.NODE_ENV === 'production' && !process.env.ROLLUP_WATCH
 
-const output = [];
+const output = []
 const plugins = [
   resolve(),
   styles(),
@@ -35,7 +36,7 @@ const plugins = [
       '@babel/env',
     ],
   }),
-];
+]
 
 if (production) {
   output.push(
@@ -51,18 +52,18 @@ if (production) {
       name,
       plugins: [terser({ output: { ecma: 5 } })],
     },
-  );
-  plugins.push();
+  )
+  plugins.push()
 } else {
   output.push({
     file: './dev/vue-avatar-cropper.js',
     format: 'umd',
     name,
-  });
+  })
 }
 
 export default {
   input: './src/index.js',
   output,
   plugins,
-};
+}

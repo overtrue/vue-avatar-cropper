@@ -12,10 +12,9 @@
 <avatar-cropper
     @uploaded="handleUploaded"
     trigger="#pick-avatar"
-    upload-url="/files/upload" 
+    upload-url="/files/upload"
 />
 ```
-
 
 ## Installing
 
@@ -27,7 +26,7 @@
    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
    <script src="https://cdn.jsdelivr.net/npm/vue-avatar-cropper"></script>
    ```
-  
+
 2. AvatarCropper will auto-install upon detecting the global Vue instance. You can use
    it right away.
 
@@ -45,20 +44,20 @@
 
    ```js
    import AvatarCropper from "vue-avatar-cropper";
-   
+
    // or
    const AvatarCropper = require('vue-avatar-cropper');
 
 
    Vue.component('AvatarCropper', AvatarCropper);
-   
+
    //or
    Vue.use(AvatarCropper);
-   
+
    //or
    new Vue({
        components: { AvatarCropper },
-       // ... 
+       // ...
    });
    ```
 
@@ -72,9 +71,9 @@
  `upload-form-data` | Object | Additional form data, default: '{}'
  `upload-handler` | Function | Handler to replace default upload handler, the argument is [cropperJS](https://github.com/fengyuanchen/cropperjs) instance.
  `upload-headers` | Object | Headers of upload request, default: `{}`
- `cropper-options` | Object | Options passed to the [cropperJS](https://github.com/fengyuanchen/cropperjs#options) instance, <br>default: `{` 
-   | | |    `aspectRatio: 1, `
-   | | |    `autoCropArea: 1, `
+ `cropper-options` | Object | Options passed to the [cropperJS](https://github.com/fengyuanchen/cropperjs#options) instance, <br>default: `{`
+   | | |    `aspectRatio: 1,`
+   | | |    `autoCropArea: 1,`
    | | |    `viewMode: 1,`
    | | |    `movable: false,`
    | | |    `zoomable: false`
@@ -86,30 +85,30 @@
  `labels` | Object | Label for buttons, default: `{ submit: "提交", cancel: "取消"}`
  `withCredentials` | Boolean | The `withCredentials` property that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates, default: `false`
  `inline` | Boolean | If true component will be displayed as inline elemenet, default: `false`
- 
+
 ### Events
 
 - **changed** user picked a file
-    - `file` object, [File](https://developer.mozilla.org/zh-CN/docs/Web/API/File) object.
-    - `reader` object, [FileReader](https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader)
+  - `file` object, [File](https://developer.mozilla.org/zh-CN/docs/Web/API/File) object.
+  - `reader` object, [FileReader](https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader)
 
 - **submit** right after a click on the submit button
 
 - **cancel** when user decides to cancel the upload
 
 - **uploading** before submit upload request, params:
-    - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
-    - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
+  - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
+  - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
 
 - **uploaded** after request is successful, params:
-    - `response` object, json parsed from `xhr.responseText`
-    - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
-    - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
+  - `response` object, json parsed from `xhr.responseText`
+  - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
+  - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
 
 - **completed** after request has completed, params:
-    - `response` object, json parsed from `xhr.responseText`
-    - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
-    - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
+  - `response` object, json parsed from `xhr.responseText`
+  - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
+  - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
 
 - **error** something went wrong, params:
   - `message` error message.
@@ -117,7 +116,6 @@
   - `context` context data.
 
 You can listen these events like this:
-
 
 ```html
 <avatar-cropper
