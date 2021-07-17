@@ -2,7 +2,7 @@
 
 name: Publish Package
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: 12
       - run: yarn install
-      - run: yarn run production
+      - run: yarn run build
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
