@@ -18,7 +18,7 @@
     "src/vue-avatar-cropper.vue"
   ],
   "scripts": {
-    "build": "cross-env NODE_ENV=production rollup -c",
+    "build": "NODE_ENV=production rollup -c",
     "dev:build": "rollup -c -w --no-watch.clearScreen",
     "dev:serve": "sirv ./dev -s -D -p 8629",
     "dev": "run-p dev:*",
