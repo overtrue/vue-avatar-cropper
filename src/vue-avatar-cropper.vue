@@ -13,6 +13,7 @@
           href="javascript:;"
         >&times;</a>
       </div>
+
       <div class="avatar-cropper-container">
         <div class="avatar-cropper-image-container">
           <img
@@ -21,29 +22,36 @@
             alt
             @load.stop="createCropper"
             @error="onImgElementError"
-          >
+          />
         </div>
+
         <div class="avatar-cropper-footer">
           <button
             @click.stop.prevent="cancel"
             class="avatar-cropper-btn"
             v-text="labels.cancel"
-          >Cancel</button>
+          >
+            Cancel
+          </button>
+
           <button
             @click.stop.prevent="submit"
             class="avatar-cropper-btn"
             v-text="labels.submit"
-          >Submit</button>
+          >
+            Submit
+          </button>
         </div>
       </div>
     </div>
+
     <input
-      :accept="mimes"
+      :accept="cleanedMimes"
       class="avatar-cropper-img-input"
       ref="input"
       type="file"
       @change="onFileInputChange"
-    >
+    />
   </div>
 </template>
 
@@ -150,6 +158,12 @@ export default {
     }
   },
 
+  computed: {
+    cleanedMimes() {
+      return this.mimes.trim().toLowerCase()
+    },
+  },
+
   methods: {
     destroy() {
       if (this.cropper) this.cropper.destroy()
@@ -191,11 +205,19 @@ export default {
     onFileInputChange(e) {
       if (e.target.files !== null && e.target.files[0] !== null) {
         const file = e.target.files[0]
-        const correctType = this.mimes.split(', ').find((mime) => mime === file.type)
 
-        if (!correctType) {
-          this.$emit('error', 'File type not correct.', 'user')
-          return
+        if (this.cleanedMimes === 'image/*') {
+          if (file.type.split('/')[0] !== 'image') {
+            this.$emit('error', 'File type not correct.', 'user')
+            return
+          }
+        } else {
+          const correctType = this.cleanedMimes.split(', ').find((mime) => mime === file.type)
+
+          if (!correctType) {
+            this.$emit('error', 'File type not correct.', 'user')
+            return
+          }
         }
 
         const reader = new FileReader()
