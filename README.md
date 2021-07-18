@@ -112,7 +112,7 @@
 
 - **error** something went wrong, params:
   - `message` error message.
-  - `type` error type, example: `upload`/`user`.
+  - `type` error type, example: `load`/`upload`/`user`/.
   - `context` context data.
 
 You can listen these events like this:
