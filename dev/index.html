@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>[DEV] vue-avatar-cropper</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- development version, includes helpful console warnings -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="vue-avatar-cropper.js"></script>
-    <link href="vue-avatar-cropper.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>[DEV] vue-avatar-cropper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <body>
-    <div id="app">
-      <h2>vue-avatar-cropper demo: vanilla Vue.js</h2>
-      <div>
-        <div class="text-center">
-          <img v-if="userAvatar" :src="userAvatar" />
-          <button id="pick-avatar">Select an image</button>
-          <button @click="() => renderAvatarCropper = !renderAvatarCropper">
-            {{ renderAvatarCropper ? 'Unmount' : 'Mount' }} avatar cropper
-          </button>
-          <avatar-cropper
-            v-if="renderAvatarCropper"
-            @uploaded="handleUploaded"
-            trigger="#pick-avatar"
-            upload-url="/files/upload"
-          />
-        </div>
+  <!-- development version, includes helpful console warnings -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="vue-avatar-cropper.js"></script>
+  <link href="vue-avatar-cropper.css" />
+</head>
+
+<body>
+  <div id="app">
+    <h2>vue-avatar-cropper demo: vanilla Vue.js</h2>
+    <div>
+      <div class="text-center">
+        <img v-if="userAvatar" :src="userAvatar" />
+        <button id="pick-avatar">Select an image</button>
+        <button @click="() => renderAvatarCropper = !renderAvatarCropper">
+          {{ renderAvatarCropper ? 'Unmount' : 'Mount' }} avatar cropper
+        </button>
+        <avatar-cropper v-if="renderAvatarCropper" trigger="#pick-avatar" upload-url="/files/upload" @uploaded="handleUploaded" @error="consoleError" />
       </div>
     </div>
+  </div>
 
-    <script>
-      new Vue({
-        el: "#app",
-        data: function() {
-          return {
-            userAvatar: undefined,
-            renderAvatarCropper: true,
-          };
+  <script>
+    new Vue({
+      el: "#app",
+
+      data: function () {
+        return {
+          userAvatar: undefined,
+          renderAvatarCropper: true,
+        }
+      },
+
+      methods: {
+        handleUploaded() {
+          console.log("uploaded")
         },
-        methods: {
-          handleUploaded() {
-            console.log("uploaded");
-          },
+
+        consoleError(...errorParts) {
+          console.log("Avatar Cropper Error", errorParts)
         },
-      });
-    </script>
-  </body>
+      },
+    });
+  </script>
+</body>
+
 </html>

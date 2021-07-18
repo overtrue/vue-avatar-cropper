@@ -16,10 +16,11 @@
       <div class="avatar-cropper-container">
         <div class="avatar-cropper-image-container">
           <img
-            :src="dataUrl"
-            @load.stop="createCropper"
-            alt
             ref="img"
+            :src="dataUrl"
+            alt
+            @load.stop="createCropper"
+            @error="onImgElementError"
           >
         </div>
         <div class="avatar-cropper-footer">
@@ -41,6 +42,7 @@
       class="avatar-cropper-img-input"
       ref="input"
       type="file"
+      @change="onFileInputChange"
     >
   </div>
 </template>
@@ -175,30 +177,37 @@ export default {
         this.destroy()
     },
 
+    onImgElementError() {
+      this.$emit('error', 'File loading failed.', 'load')
+      this.destroy()
+    },
+
     pickImage(e) {
       this.$refs.input.click()
       e.preventDefault()
       e.stopPropagation()
     },
 
-    onFileInputChange() {
-      const fileInput = this.$refs.input
-      if (fileInput.files != null && fileInput.files[0] != null) {
-        const correctType = this.mimes.split(', ').find((mime) => mime === fileInput.files[0].type)
+    onFileInputChange(e) {
+      if (e.target.files !== null && e.target.files[0] !== null) {
+        const file = e.target.files[0]
+        const correctType = this.mimes.split(', ').find((mime) => mime === file.type)
+
         if (!correctType) {
           this.$emit('error', 'File type not correct.', 'user')
           return
         }
+
         const reader = new FileReader()
         reader.onload = (e) => {
           this.dataUrl = e.target.result
         }
 
-        reader.readAsDataURL(fileInput.files[0])
+        reader.readAsDataURL(file)
 
-        this.filename = fileInput.files[0].name || 'unknown'
-        this.mimeType = this.mimeType || fileInput.files[0].type
-        this.$emit('changed', fileInput.files[0], reader)
+        this.filename = file.name || 'unknown'
+        this.mimeType = this.mimeType || file.type
+        this.$emit('changed', file, reader)
       }
     },
 
@@ -268,16 +277,10 @@ export default {
     } else {
       this.triggerEl.addEventListener('click', this.pickImage)
     }
-
-    // listen for input file changes
-    const fileInput = this.$refs.input
-    fileInput.addEventListener('change', this.onFileInputChange)
   },
 
   beforeDestroy() {
-    const fileInput = this.$refs.input
     if (this.triggerEl) this.triggerEl.removeEventListener('click', this.pickImage)
-    if (fileInput) fileInput.removeEventListener('change', this.onFileInputChange)
   },
 }
 </script>
@@ -296,6 +299,7 @@ export default {
     bottom: 0;
     z-index: 99999;
   }
+
   .avatar-cropper-overlay-inline{
     position: initial;
   }
@@ -332,6 +336,7 @@ export default {
       max-width: 400px;
       height: 300px;
     }
+
     img {
       max-width: 100%;
       height: 100%;
@@ -350,6 +355,7 @@ export default {
         border: none;
         background: transparent;
         outline: none;
+
         &:hover {
           background-color: #2aabd2;
           color: #fff;
