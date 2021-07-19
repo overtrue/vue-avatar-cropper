@@ -82,6 +82,7 @@
  `output-mime` | String | The resulting avatar image mime type, default: `null`
  `output-quality` | Number | The resulting avatar image quality [0 - 1], default: `0.9`<br>(if the output-mime property is `image/jpeg` or `image/webp`)
  `mimes` | String | Allowed image formats, default: <br>`image/png, image/gif, image/jpeg, image/bmp, image/x-icon`
+ `capture` | String | Capture attribute for the file input. Forces mobile users to take a new picture with the back(Use value `environment`) or front(Use value `user`) camera, default: `null`
  `labels` | Object | Label for buttons, default: `{ submit: "提交", cancel: "取消"}`
  `withCredentials` | Boolean | The `withCredentials` property that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates, default: `false`
  `inline` | Boolean | If true component will be displayed as inline elemenet, default: `false`
