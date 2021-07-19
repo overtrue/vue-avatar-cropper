@@ -63,9 +63,15 @@ import Cropper from 'cropperjs'
 export default {
   name: 'AvatarCropper',
 
+  model: {
+    prop: 'trigger',
+    event: 'triggered',
+  },
+
   props: {
     trigger: {
-      type: [String, Element],
+      type: Boolean,
+      default: false,
       required: true,
     },
 
@@ -169,6 +175,15 @@ export default {
     },
   },
 
+  watch: {
+    trigger(value) {
+      if (!value) return
+
+      this.pickImage()
+      this.$emit('triggered', false)
+    },
+  },
+
   methods: {
     destroy() {
       if (this.cropper) this.cropper.destroy()
@@ -201,10 +216,8 @@ export default {
       this.destroy()
     },
 
-    pickImage(e) {
+    pickImage() {
       this.$refs.input.click()
-      e.preventDefault()
-      e.stopPropagation()
     },
 
     onFileInputChange(e) {
@@ -291,23 +304,6 @@ export default {
         this.outputQuality,
       )
     },
-  },
-
-  mounted() {
-    // listen for click event on trigger
-    this.triggerEl =
-      typeof this.trigger === 'object'
-        ? this.trigger
-        : document.querySelector(this.trigger)
-    if (!this.triggerEl) {
-      this.$emit('error', 'No avatar make trigger found.', 'user')
-    } else {
-      this.triggerEl.addEventListener('click', this.pickImage)
-    }
-  },
-
-  beforeDestroy() {
-    if (this.triggerEl) this.triggerEl.removeEventListener('click', this.pickImage)
   },
 }
 </script>
