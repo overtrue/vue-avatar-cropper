@@ -9,6 +9,8 @@
 ## Basic usage
 
 ```html
+<button @click="() => { trigger = true }">Pick avatar</button>
+
 <avatar-cropper
     v-model="trigger"
     upload-url="/files/upload"
