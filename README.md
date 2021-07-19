@@ -89,6 +89,9 @@
 
 ### Events
 
+- **triggered** `trigger` prop changed, used for `v-model`
+  - `value` boolean.
+
 - **changed** user picked a file
   - `file` object, [File](https://developer.mozilla.org/zh-CN/docs/Web/API/File) object.
   - `reader` object, [FileReader](https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader)
