@@ -21,7 +21,7 @@
     "build": "NODE_ENV=production rollup -c",
     "dev:build": "rollup -c -w --no-watch.clearScreen",
     "dev:serve": "sirv ./dev -s -D -p 8629",
-    "dev": "run-p dev:*",
+    "dev": "run-p dev:build dev:serve",
     "dev:net": "run-p dev:build 'dev:serve --host'",
     "test:lint": "eslint .",
     "test:size": "size-limit",
