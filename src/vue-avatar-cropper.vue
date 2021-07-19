@@ -47,6 +47,7 @@
 
     <input
       :accept="cleanedMimes"
+      :capture="capture"
       class="avatar-cropper-img-input"
       ref="input"
       type="file"
@@ -126,6 +127,10 @@ export default {
     mimes: {
       type: String,
       default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon',
+    },
+
+    capture: {
+      type: String,
     },
 
     labels: {
