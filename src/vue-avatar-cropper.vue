@@ -165,7 +165,6 @@ export default {
       cropper: undefined,
       dataUrl: undefined,
       filename: undefined,
-      triggerEl: undefined,
     }
   },
 
@@ -182,6 +181,10 @@ export default {
       this.pickImage()
       this.$emit('triggered', false)
     },
+  },
+
+  mounted() {
+    this.$emit('triggered', false)
   },
 
   methods: {
