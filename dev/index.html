@@ -18,11 +18,11 @@
     <div>
       <div class="text-center">
         <img v-if="userAvatar" :src="userAvatar" />
-        <button @click="() => { triggered = true }">Select an image</button>
+        <button @click="() => { trigger = true }">Select an image</button>
         <button @click="() => renderAvatarCropper = !renderAvatarCropper">
           {{ renderAvatarCropper ? 'Unmount' : 'Mount' }} avatar cropper
         </button>
-        <avatar-cropper v-if="renderAvatarCropper" v-model="triggered" upload-url="/files/upload" @uploaded="handleUploaded" @error="consoleError" />
+        <avatar-cropper v-if="renderAvatarCropper" v-model="trigger" upload-url="/files/upload" @uploaded="handleUploaded" @error="consoleError" />
       </div>
     </div>
   </div>
@@ -33,7 +33,7 @@
 
       data: function () {
         return {
-          triggered: false,
+          trigger: false,
           userAvatar: undefined,
           renderAvatarCropper: true,
         }
