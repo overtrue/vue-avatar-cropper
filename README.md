@@ -9,10 +9,12 @@
 ## Basic usage
 
 ```html
+<button @click="() => { trigger = true }">Pick avatar</button>
+
 <avatar-cropper
-    @uploaded="handleUploaded"
-    trigger="#pick-avatar"
+    v-model="trigger"
     upload-url="/files/upload"
+    @uploaded="handleUploaded"
 />
 ```
 
@@ -65,7 +67,7 @@
 
  Property Name | Type | Description
  -------- | -------- | --------
- `trigger` | String\|Element | The element to trigger avatar pick
+ `trigger` | Boolean | Set to true to trigger the avatar cropper, this prop is used for `v-model`, default: `false`
  `upload-url` | String | Url of upload croppped image
  `upload-form-name` | String | Form name of upload request, default: 'file'
  `upload-form-data` | Object | Additional form data, default: '{}'
@@ -88,6 +90,9 @@
  `inline` | Boolean | If true component will be displayed as inline elemenet, default: `false`
 
 ### Events
+
+- **triggered** `trigger` prop changed, used for `v-model`
+  - `value` boolean.
 
 - **changed** user picked a file
   - `file` object, [File](https://developer.mozilla.org/zh-CN/docs/Web/API/File) object.
@@ -120,7 +125,7 @@ You can listen these events like this:
 
 ```html
 <avatar-cropper
-    trigger="#set-avatar"
+    v-model="trigger"
     upload-url="/files/upload"
     @uploading="handleUploading"
     @uploaded="handleUploaded"
