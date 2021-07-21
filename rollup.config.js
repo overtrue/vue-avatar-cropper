@@ -1,20 +1,23 @@
 import babel from 'rollup-plugin-babel'
-import resolve from '@rollup/plugin-node-resolve'
+import nodeResolve from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 import styles from 'rollup-plugin-styles'
 import vue from 'rollup-plugin-vue'
 
 import autoprefixer from 'autoprefixer'
 
+import pkg from './package.json'
+
 const name = 'vue-avatar-cropper'
 const outFilename = (infix) => `./dist/vue-avatar-cropper.${infix}.js`
 
 /* eslint-disable-next-line no-undef */
 const production = process.env.NODE_ENV === 'production' && !process.env.ROLLUP_WATCH
+const external = Object.keys(pkg.dependencies || {})
 
 const output = []
 const plugins = [
-  resolve(),
+  nodeResolve(),
   styles(),
   vue({
     preprocessStyles: true,
@@ -45,25 +48,35 @@ if (production) {
       format: 'esm',
       name,
       plugins: [terser({ output: { ecma: 6 } })],
+      globals: {
+        cropperjs: 'Cropper',
+      },
     },
+
     {
       file: outFilename('umd'),
       format: 'umd',
       name,
       plugins: [terser({ output: { ecma: 5 } })],
+      globals: {
+        cropperjs: 'Cropper',
+      },
     },
   )
-  plugins.push()
 } else {
   output.push({
     file: './dev/vue-avatar-cropper.js',
     format: 'umd',
     name,
+    globals: {
+      cropperjs: 'Cropper',
+    },
   })
 }
 
 export default {
   input: './src/index.js',
+  external,
   output,
   plugins,
 }
