@@ -8,15 +8,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Setup node version 12
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: 12
       - run: yarn install
       - run: yarn run build
-      - name: Publish to NPM
-        uses: JS-DevTools/npm-publish@v1
+      - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_AUTH_TOKEN }}
+          access: public
