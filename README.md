@@ -22,9 +22,11 @@
 
 ### Browsers
 
-1. Include the link to AvatarCropper in `<head>` alongside Vue.js:
+1. Include the link to AvatarCropper in `<head>` alongside Vue.js and Cropper.js:
 
    ```html
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css">
+   <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
    <script src="https://cdn.jsdelivr.net/npm/vue-avatar-cropper"></script>
    ```
