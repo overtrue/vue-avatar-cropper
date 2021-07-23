@@ -29,23 +29,22 @@
           <button
             @click.stop.prevent="cancel"
             class="avatar-cropper-btn"
-            v-text="labels.cancel"
           >
-            Cancel
+            {{ labels.cancel }}
           </button>
 
           <button
             @click.stop.prevent="submit"
             class="avatar-cropper-btn"
-            v-text="labels.submit"
           >
-            Submit
+            {{ labels.submit }}
           </button>
         </div>
       </div>
     </div>
 
     <input
+      v-if="!file"
       :accept="cleanedMimes"
       :capture="capture"
       class="avatar-cropper-img-input"
@@ -72,7 +71,10 @@ export default {
     trigger: {
       type: Boolean,
       default: false,
-      required: true,
+    },
+
+    file: {
+      type: File,
     },
 
     uploadHandler: {
@@ -125,6 +127,7 @@ export default {
       type: String,
       default: null,
     },
+
     outputQuality: {
       type: Number,
       default: 0.9,
@@ -133,6 +136,7 @@ export default {
     mimes: {
       type: String,
       default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon',
+      required: true,
     },
 
     capture: {
@@ -170,6 +174,8 @@ export default {
 
   computed: {
     cleanedMimes() {
+      if (!this.mimes) throw new Error('vue-avatar-cropper: mimes prop cannot be empty')
+
       return this.mimes.trim().toLowerCase()
     },
   },
@@ -178,7 +184,12 @@ export default {
     trigger(value) {
       if (!value) return
 
-      this.pickImage()
+      if (this.file) {
+        this.onFileChange(this.file)
+      } else {
+        this.pickImage()
+      }
+
       this.$emit('triggered', false)
     },
   },
@@ -191,7 +202,8 @@ export default {
     destroy() {
       if (this.cropper) this.cropper.destroy()
 
-      this.$refs.input.value = ''
+      if (this.$refs.input) this.$refs.input.value = ''
+
       this.dataUrl = undefined
     },
 
@@ -220,38 +232,40 @@ export default {
     },
 
     pickImage() {
-      this.$refs.input.click()
+      if (this.$refs.input) this.$refs.input.click()
+    },
+
+    onFileChange(file) {
+      if (this.cleanedMimes === 'image/*') {
+        if (file.type.split('/')[0] !== 'image') {
+          this.$emit('error', 'File type not correct.', 'user')
+          return
+        }
+      } else if (this.cleanedMimes) {
+        const correctType = this.cleanedMimes.split(', ').find((mime) => mime === file.type)
+
+        if (!correctType) {
+          this.$emit('error', 'File type not correct.', 'user')
+          return
+        }
+      }
+
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        this.dataUrl = e.target.result
+      }
+
+      reader.readAsDataURL(file)
+
+      this.filename = file.name || 'unknown'
+      this.mimeType = this.mimeType || file.type
+      this.$emit('changed', file, reader)
     },
 
     onFileInputChange(e) {
-      if (e.target.files !== null && e.target.files[0] !== null) {
-        const file = e.target.files[0]
+      if (!e.target.files || !e.target.files[0]) return
 
-        if (this.cleanedMimes === 'image/*') {
-          if (file.type.split('/')[0] !== 'image') {
-            this.$emit('error', 'File type not correct.', 'user')
-            return
-          }
-        } else {
-          const correctType = this.cleanedMimes.split(', ').find((mime) => mime === file.type)
-
-          if (!correctType) {
-            this.$emit('error', 'File type not correct.', 'user')
-            return
-          }
-        }
-
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          this.dataUrl = e.target.result
-        }
-
-        reader.readAsDataURL(file)
-
-        this.filename = file.name || 'unknown'
-        this.mimeType = this.mimeType || file.type
-        this.$emit('changed', file, reader)
-      }
+      this.onFileChange(e.target.files[0])
     },
 
     createCropper() {

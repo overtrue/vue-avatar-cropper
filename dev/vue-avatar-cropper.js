@@ -27,7 +27,10 @@
       trigger: {
         type: Boolean,
         default: false,
-        required: true,
+      },
+
+      file: {
+        type: File,
       },
 
       uploadHandler: {
@@ -80,6 +83,7 @@
         type: String,
         default: null,
       },
+
       outputQuality: {
         type: Number,
         default: 0.9,
@@ -88,6 +92,7 @@
       mimes: {
         type: String,
         default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon',
+        required: true,
       },
 
       capture: {
@@ -125,6 +130,8 @@
 
     computed: {
       cleanedMimes() {
+        if (!this.mimes) throw new Error('vue-avatar-cropper: mimes prop cannot be empty')
+
         return this.mimes.trim().toLowerCase()
       },
     },
@@ -133,7 +140,12 @@
       trigger(value) {
         if (!value) return
 
-        this.pickImage();
+        if (this.file) {
+          this.onFileChange(this.file);
+        } else {
+          this.pickImage();
+        }
+
         this.$emit('triggered', false);
       },
     },
@@ -146,7 +158,8 @@
       destroy() {
         if (this.cropper) this.cropper.destroy();
 
-        this.$refs.input.value = '';
+        if (this.$refs.input) this.$refs.input.value = '';
+
         this.dataUrl = undefined;
       },
 
@@ -175,38 +188,40 @@
       },
 
       pickImage() {
-        this.$refs.input.click();
+        if (this.$refs.input) this.$refs.input.click();
+      },
+
+      onFileChange(file) {
+        if (this.cleanedMimes === 'image/*') {
+          if (file.type.split('/')[0] !== 'image') {
+            this.$emit('error', 'File type not correct.', 'user');
+            return
+          }
+        } else if (this.cleanedMimes) {
+          const correctType = this.cleanedMimes.split(', ').find((mime) => mime === file.type);
+
+          if (!correctType) {
+            this.$emit('error', 'File type not correct.', 'user');
+            return
+          }
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.dataUrl = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+
+        this.filename = file.name || 'unknown';
+        this.mimeType = this.mimeType || file.type;
+        this.$emit('changed', file, reader);
       },
 
       onFileInputChange(e) {
-        if (e.target.files !== null && e.target.files[0] !== null) {
-          const file = e.target.files[0];
+        if (!e.target.files || !e.target.files[0]) return
 
-          if (this.cleanedMimes === 'image/*') {
-            if (file.type.split('/')[0] !== 'image') {
-              this.$emit('error', 'File type not correct.', 'user');
-              return
-            }
-          } else {
-            const correctType = this.cleanedMimes.split(', ').find((mime) => mime === file.type);
-
-            if (!correctType) {
-              this.$emit('error', 'File type not correct.', 'user');
-              return
-            }
-          }
-
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.dataUrl = e.target.result;
-          };
-
-          reader.readAsDataURL(file);
-
-          this.filename = file.name || 'unknown';
-          this.mimeType = this.mimeType || file.type;
-          this.$emit('changed', file, reader);
-        }
+        this.onFileChange(e.target.files[0]);
       },
 
       createCropper() {
@@ -442,7 +457,6 @@
                     "button",
                     {
                       staticClass: "avatar-cropper-btn",
-                      domProps: { textContent: _vm._s(_vm.labels.cancel) },
                       on: {
                         click: function($event) {
                           $event.stopPropagation();
@@ -451,13 +465,12 @@
                         }
                       }
                     },
-                    [_vm._v(" Cancel ")]
+                    [_vm._v(" " + _vm._s(_vm.labels.cancel) + " ")]
                   ),
                   _c(
                     "button",
                     {
                       staticClass: "avatar-cropper-btn",
-                      domProps: { textContent: _vm._s(_vm.labels.submit) },
                       on: {
                         click: function($event) {
                           $event.stopPropagation();
@@ -466,19 +479,25 @@
                         }
                       }
                     },
-                    [_vm._v(" Submit ")]
+                    [_vm._v(" " + _vm._s(_vm.labels.submit) + " ")]
                   )
                 ])
               ])
             ]
           )
         : _vm._e(),
-      _c("input", {
-        ref: "input",
-        staticClass: "avatar-cropper-img-input",
-        attrs: { accept: _vm.cleanedMimes, capture: _vm.capture, type: "file" },
-        on: { change: _vm.onFileInputChange }
-      })
+      !_vm.file
+        ? _c("input", {
+            ref: "input",
+            staticClass: "avatar-cropper-img-input",
+            attrs: {
+              accept: _vm.cleanedMimes,
+              capture: _vm.capture,
+              type: "file"
+            },
+            on: { change: _vm.onFileInputChange }
+          })
+        : _vm._e()
     ])
   };
   var __vue_staticRenderFns__ = [];
@@ -487,7 +506,7 @@
     /* style */
     const __vue_inject_styles__ = function (inject) {
       if (!inject) return
-      inject("data-v-21f11c3b_0", { source: ".avatar-cropper .avatar-cropper-overlay {\n  text-align: center;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  z-index: 99999;\n}\n.avatar-cropper .avatar-cropper-overlay-inline {\n  position: initial;\n}\n.avatar-cropper .avatar-cropper-img-input {\n  display: none;\n}\n.avatar-cropper .avatar-cropper-close {\n  float: right;\n  padding: 20px;\n  font-size: 3rem;\n  color: #fff;\n  font-weight: 100;\n  text-shadow: 0px 1px rgba(40, 40, 40, 0.3);\n}\n.avatar-cropper .avatar-cropper-mark {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.1);\n}\n.avatar-cropper .avatar-cropper-container {\n  background: #fff;\n  z-index: 999;\n  box-shadow: 1px 1px 5px rgba(100, 100, 100, 0.14);\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-image-container {\n  position: relative;\n  max-width: 400px;\n  height: 300px;\n}\n.avatar-cropper .avatar-cropper-container img {\n  max-width: 100%;\n  height: 100%;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer {\n  display: flex;\n  align-items: stretch;\n  align-content: stretch;\n  justify-content: space-between;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer .avatar-cropper-btn {\n  width: 50%;\n  padding: 15px 0;\n  cursor: pointer;\n  border: none;\n  background: transparent;\n  outline: none;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer .avatar-cropper-btn:hover {\n  background-color: #2aabd2;\n  color: #fff;\n}\n\n/*# sourceMappingURL=vue-avatar-cropper.vue.map */", map: {"version":3,"sources":["/home/ferretwithaberet/Projects/Github/vue-avatar-cropper/src/vue-avatar-cropper.vue","vue-avatar-cropper.vue"],"names":[],"mappings":"AA2TA;EACA,kBAAA;EACA,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,QAAA;EACA,SAAA;EACA,cAAA;AC1TA;AD6TA;EACA,iBAAA;AC3TA;AD8TA;EACA,aAAA;AC5TA;AD+TA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,WAAA;EACA,gBAAA;EACA,0CAAA;AC7TA;ADgUA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,QAAA;EACA,SAAA;EACA,8BAAA;AC9TA;ADiUA;EACA,gBAAA;EACA,YAAA;EACA,iDAAA;AC/TA;ADiUA;EACA,kBAAA;EACA,gBAAA;EACA,aAAA;AC/TA;ADkUA;EACA,eAAA;EACA,YAAA;AChUA;ADmUA;EACA,aAAA;EACA,oBAAA;EACA,sBAAA;EACA,8BAAA;ACjUA;ADmUA;EACA,UAAA;EACA,eAAA;EACA,eAAA;EACA,YAAA;EACA,uBAAA;EACA,aAAA;ACjUA;ADmUA;EACA,yBAAA;EACA,WAAA;ACjUA;;AAEA,iDAAiD","file":"vue-avatar-cropper.vue","sourcesContent":["<template>\n  <div class=\"avatar-cropper\">\n    <div\n      class=\"avatar-cropper-overlay\"\n      :class=\"{'avatar-cropper-overlay-inline': inline}\"\n      v-if=\"dataUrl\"\n    >\n      <div class=\"avatar-cropper-mark\" v-if=\"!inline\">\n        <a\n          @click=\"cancel\"\n          class=\"avatar-cropper-close\"\n          :title=\"labels.cancel\"\n          href=\"javascript:;\"\n        >&times;</a>\n      </div>\n\n      <div class=\"avatar-cropper-container\">\n        <div class=\"avatar-cropper-image-container\">\n          <img\n            ref=\"img\"\n            :src=\"dataUrl\"\n            alt\n            @load.stop=\"createCropper\"\n            @error=\"onImgElementError\"\n          />\n        </div>\n\n        <div class=\"avatar-cropper-footer\">\n          <button\n            @click.stop.prevent=\"cancel\"\n            class=\"avatar-cropper-btn\"\n            v-text=\"labels.cancel\"\n          >\n            Cancel\n          </button>\n\n          <button\n            @click.stop.prevent=\"submit\"\n            class=\"avatar-cropper-btn\"\n            v-text=\"labels.submit\"\n          >\n            Submit\n          </button>\n        </div>\n      </div>\n    </div>\n\n    <input\n      :accept=\"cleanedMimes\"\n      :capture=\"capture\"\n      class=\"avatar-cropper-img-input\"\n      ref=\"input\"\n      type=\"file\"\n      @change=\"onFileInputChange\"\n    />\n  </div>\n</template>\n\n<script>\nimport 'cropperjs/dist/cropper.css'\nimport Cropper from 'cropperjs'\n\nexport default {\n  name: 'AvatarCropper',\n\n  model: {\n    prop: 'trigger',\n    event: 'triggered',\n  },\n\n  props: {\n    trigger: {\n      type: Boolean,\n      default: false,\n      required: true,\n    },\n\n    uploadHandler: {\n      type: Function,\n    },\n\n    uploadUrl: {\n      type: String,\n    },\n\n    requestMethod: {\n      type: String,\n      default: 'POST',\n    },\n\n    uploadHeaders: {\n      type: Object,\n    },\n\n    uploadFormName: {\n      type: String,\n      default: 'file',\n    },\n\n    uploadFormData: {\n      type: Object,\n      default() {\n        return {}\n      },\n    },\n\n    cropperOptions: {\n      type: Object,\n      default() {\n        return {\n          aspectRatio: 1,\n          autoCropArea: 1,\n          viewMode: 1,\n          movable: false,\n          zoomable: false,\n        }\n      },\n    },\n\n    outputOptions: {\n      type: Object,\n    },\n\n    outputMime: {\n      type: String,\n      default: null,\n    },\n    outputQuality: {\n      type: Number,\n      default: 0.9,\n    },\n\n    mimes: {\n      type: String,\n      default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon',\n    },\n\n    capture: {\n      type: String,\n    },\n\n    labels: {\n      type: Object,\n      default() {\n        return {\n          submit: '提交',\n          cancel: '取消',\n        }\n      },\n    },\n\n    withCredentials: {\n      type: Boolean,\n      default: false,\n    },\n\n    inline: {\n      type: Boolean,\n      default: false,\n    },\n  },\n\n  data() {\n    return {\n      cropper: undefined,\n      dataUrl: undefined,\n      filename: undefined,\n    }\n  },\n\n  computed: {\n    cleanedMimes() {\n      return this.mimes.trim().toLowerCase()\n    },\n  },\n\n  watch: {\n    trigger(value) {\n      if (!value) return\n\n      this.pickImage()\n      this.$emit('triggered', false)\n    },\n  },\n\n  mounted() {\n    this.$emit('triggered', false)\n  },\n\n  methods: {\n    destroy() {\n      if (this.cropper) this.cropper.destroy()\n\n      this.$refs.input.value = ''\n      this.dataUrl = undefined\n    },\n\n    submit() {\n      this.$emit('submit')\n\n      if (this.uploadUrl) {\n        this.uploadImage()\n      } else if (this.uploadHandler) {\n        this.uploadHandler(this.cropper)\n      } else {\n        this.$emit('error', 'No upload handler found.', 'user')\n      }\n\n      this.destroy()\n    },\n\n    cancel(){\n        this.$emit('cancel')\n        this.destroy()\n    },\n\n    onImgElementError() {\n      this.$emit('error', 'File loading failed.', 'load')\n      this.destroy()\n    },\n\n    pickImage() {\n      this.$refs.input.click()\n    },\n\n    onFileInputChange(e) {\n      if (e.target.files !== null && e.target.files[0] !== null) {\n        const file = e.target.files[0]\n\n        if (this.cleanedMimes === 'image/*') {\n          if (file.type.split('/')[0] !== 'image') {\n            this.$emit('error', 'File type not correct.', 'user')\n            return\n          }\n        } else {\n          const correctType = this.cleanedMimes.split(', ').find((mime) => mime === file.type)\n\n          if (!correctType) {\n            this.$emit('error', 'File type not correct.', 'user')\n            return\n          }\n        }\n\n        const reader = new FileReader()\n        reader.onload = (e) => {\n          this.dataUrl = e.target.result\n        }\n\n        reader.readAsDataURL(file)\n\n        this.filename = file.name || 'unknown'\n        this.mimeType = this.mimeType || file.type\n        this.$emit('changed', file, reader)\n      }\n    },\n\n    createCropper() {\n      this.cropper = new Cropper(this.$refs.img, this.cropperOptions)\n    },\n\n    uploadImage() {\n      this.cropper.getCroppedCanvas(this.outputOptions).toBlob(\n        (blob) => {\n          const form = new FormData()\n          const xhr = new XMLHttpRequest()\n          const data = Object.assign({}, this.uploadFormData)\n\n          xhr.withCredentials = this.withCredentials\n\n          for (const key in data) {\n            form.append(key, data[key])\n          }\n\n          form.append(this.uploadFormName, blob, this.filename)\n\n          this.$emit('uploading', form, xhr)\n\n          xhr.open(this.requestMethod, this.uploadUrl, true)\n\n          for (const header in this.uploadHeaders) {\n            xhr.setRequestHeader(header, this.uploadHeaders[header])\n          }\n\n          xhr.onreadystatechange = () => {\n            if (xhr.readyState === 4) {\n              let response = ''\n\n              try {\n                response = JSON.parse(xhr.responseText)\n              } catch (err) {\n                response = xhr.responseText\n              }\n\n              this.$emit('completed', response, form, xhr)\n\n              if ([200, 201, 204].indexOf(xhr.status) > -1) {\n                this.$emit('uploaded', response, form, xhr)\n              } else {\n                this.$emit('error', 'Image upload fail.', 'upload', xhr)\n              }\n            }\n          }\n\n          xhr.send(form)\n        },\n        this.outputMime,\n        this.outputQuality,\n      )\n    },\n  },\n}\n</script>\n\n<style lang=\"scss\">\n.avatar-cropper {\n  .avatar-cropper-overlay {\n    text-align: center;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    z-index: 99999;\n  }\n\n  .avatar-cropper-overlay-inline{\n    position: initial;\n  }\n\n  .avatar-cropper-img-input {\n    display: none;\n  }\n\n  .avatar-cropper-close {\n    float: right;\n    padding: 20px;\n    font-size: 3rem;\n    color: #fff;\n    font-weight: 100;\n    text-shadow: 0px 1px rgba(40, 40, 40, 0.3);\n  }\n\n  .avatar-cropper-mark {\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background: rgba(0, 0, 0, 0.1);\n  }\n\n  .avatar-cropper-container {\n    background: #fff;\n    z-index: 999;\n    box-shadow: 1px 1px 5px rgba(100, 100, 100, 0.14);\n\n    .avatar-cropper-image-container {\n      position: relative;\n      max-width: 400px;\n      height: 300px;\n    }\n\n    img {\n      max-width: 100%;\n      height: 100%;\n    }\n\n    .avatar-cropper-footer {\n      display: flex;\n      align-items: stretch;\n      align-content: stretch;\n      justify-content: space-between;\n\n      .avatar-cropper-btn {\n        width: 50%;\n        padding: 15px 0;\n        cursor: pointer;\n        border: none;\n        background: transparent;\n        outline: none;\n\n        &:hover {\n          background-color: #2aabd2;\n          color: #fff;\n        }\n      }\n    }\n  }\n}\n</style>\n",".avatar-cropper .avatar-cropper-overlay {\n  text-align: center;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  z-index: 99999;\n}\n.avatar-cropper .avatar-cropper-overlay-inline {\n  position: initial;\n}\n.avatar-cropper .avatar-cropper-img-input {\n  display: none;\n}\n.avatar-cropper .avatar-cropper-close {\n  float: right;\n  padding: 20px;\n  font-size: 3rem;\n  color: #fff;\n  font-weight: 100;\n  text-shadow: 0px 1px rgba(40, 40, 40, 0.3);\n}\n.avatar-cropper .avatar-cropper-mark {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.1);\n}\n.avatar-cropper .avatar-cropper-container {\n  background: #fff;\n  z-index: 999;\n  box-shadow: 1px 1px 5px rgba(100, 100, 100, 0.14);\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-image-container {\n  position: relative;\n  max-width: 400px;\n  height: 300px;\n}\n.avatar-cropper .avatar-cropper-container img {\n  max-width: 100%;\n  height: 100%;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer {\n  display: flex;\n  align-items: stretch;\n  align-content: stretch;\n  justify-content: space-between;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer .avatar-cropper-btn {\n  width: 50%;\n  padding: 15px 0;\n  cursor: pointer;\n  border: none;\n  background: transparent;\n  outline: none;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer .avatar-cropper-btn:hover {\n  background-color: #2aabd2;\n  color: #fff;\n}\n\n/*# sourceMappingURL=vue-avatar-cropper.vue.map */"]}, media: undefined });
+      inject("data-v-3bf4917d_0", { source: ".avatar-cropper .avatar-cropper-overlay {\n  text-align: center;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  z-index: 99999;\n}\n.avatar-cropper .avatar-cropper-overlay-inline {\n  position: initial;\n}\n.avatar-cropper .avatar-cropper-img-input {\n  display: none;\n}\n.avatar-cropper .avatar-cropper-close {\n  float: right;\n  padding: 20px;\n  font-size: 3rem;\n  color: #fff;\n  font-weight: 100;\n  text-shadow: 0px 1px rgba(40, 40, 40, 0.3);\n}\n.avatar-cropper .avatar-cropper-mark {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.1);\n}\n.avatar-cropper .avatar-cropper-container {\n  background: #fff;\n  z-index: 999;\n  box-shadow: 1px 1px 5px rgba(100, 100, 100, 0.14);\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-image-container {\n  position: relative;\n  max-width: 400px;\n  height: 300px;\n}\n.avatar-cropper .avatar-cropper-container img {\n  max-width: 100%;\n  height: 100%;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer {\n  display: flex;\n  align-items: stretch;\n  align-content: stretch;\n  justify-content: space-between;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer .avatar-cropper-btn {\n  width: 50%;\n  padding: 15px 0;\n  cursor: pointer;\n  border: none;\n  background: transparent;\n  outline: none;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer .avatar-cropper-btn:hover {\n  background-color: #2aabd2;\n  color: #fff;\n}\n\n/*# sourceMappingURL=vue-avatar-cropper.vue.map */", map: {"version":3,"sources":["/home/ferretwithaberet/Projects/Github/vue-avatar-cropper/src/vue-avatar-cropper.vue","vue-avatar-cropper.vue"],"names":[],"mappings":"AAyUA;EACA,kBAAA;EACA,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,QAAA;EACA,SAAA;EACA,cAAA;ACxUA;AD2UA;EACA,iBAAA;ACzUA;AD4UA;EACA,aAAA;AC1UA;AD6UA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,WAAA;EACA,gBAAA;EACA,0CAAA;AC3UA;AD8UA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,QAAA;EACA,SAAA;EACA,8BAAA;AC5UA;AD+UA;EACA,gBAAA;EACA,YAAA;EACA,iDAAA;AC7UA;AD+UA;EACA,kBAAA;EACA,gBAAA;EACA,aAAA;AC7UA;ADgVA;EACA,eAAA;EACA,YAAA;AC9UA;ADiVA;EACA,aAAA;EACA,oBAAA;EACA,sBAAA;EACA,8BAAA;AC/UA;ADiVA;EACA,UAAA;EACA,eAAA;EACA,eAAA;EACA,YAAA;EACA,uBAAA;EACA,aAAA;AC/UA;ADiVA;EACA,yBAAA;EACA,WAAA;AC/UA;;AAEA,iDAAiD","file":"vue-avatar-cropper.vue","sourcesContent":["<template>\n  <div class=\"avatar-cropper\">\n    <div\n      class=\"avatar-cropper-overlay\"\n      :class=\"{'avatar-cropper-overlay-inline': inline}\"\n      v-if=\"dataUrl\"\n    >\n      <div class=\"avatar-cropper-mark\" v-if=\"!inline\">\n        <a\n          @click=\"cancel\"\n          class=\"avatar-cropper-close\"\n          :title=\"labels.cancel\"\n          href=\"javascript:;\"\n        >&times;</a>\n      </div>\n\n      <div class=\"avatar-cropper-container\">\n        <div class=\"avatar-cropper-image-container\">\n          <img\n            ref=\"img\"\n            :src=\"dataUrl\"\n            alt\n            @load.stop=\"createCropper\"\n            @error=\"onImgElementError\"\n          />\n        </div>\n\n        <div class=\"avatar-cropper-footer\">\n          <button\n            @click.stop.prevent=\"cancel\"\n            class=\"avatar-cropper-btn\"\n          >\n            {{ labels.cancel }}\n          </button>\n\n          <button\n            @click.stop.prevent=\"submit\"\n            class=\"avatar-cropper-btn\"\n          >\n            {{ labels.submit }}\n          </button>\n        </div>\n      </div>\n    </div>\n\n    <input\n      v-if=\"!file\"\n      :accept=\"cleanedMimes\"\n      :capture=\"capture\"\n      class=\"avatar-cropper-img-input\"\n      ref=\"input\"\n      type=\"file\"\n      @change=\"onFileInputChange\"\n    />\n  </div>\n</template>\n\n<script>\nimport 'cropperjs/dist/cropper.css'\nimport Cropper from 'cropperjs'\n\nexport default {\n  name: 'AvatarCropper',\n\n  model: {\n    prop: 'trigger',\n    event: 'triggered',\n  },\n\n  props: {\n    trigger: {\n      type: Boolean,\n      default: false,\n    },\n\n    file: {\n      type: File,\n    },\n\n    uploadHandler: {\n      type: Function,\n    },\n\n    uploadUrl: {\n      type: String,\n    },\n\n    requestMethod: {\n      type: String,\n      default: 'POST',\n    },\n\n    uploadHeaders: {\n      type: Object,\n    },\n\n    uploadFormName: {\n      type: String,\n      default: 'file',\n    },\n\n    uploadFormData: {\n      type: Object,\n      default() {\n        return {}\n      },\n    },\n\n    cropperOptions: {\n      type: Object,\n      default() {\n        return {\n          aspectRatio: 1,\n          autoCropArea: 1,\n          viewMode: 1,\n          movable: false,\n          zoomable: false,\n        }\n      },\n    },\n\n    outputOptions: {\n      type: Object,\n    },\n\n    outputMime: {\n      type: String,\n      default: null,\n    },\n\n    outputQuality: {\n      type: Number,\n      default: 0.9,\n    },\n\n    mimes: {\n      type: String,\n      default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon',\n      required: true,\n    },\n\n    capture: {\n      type: String,\n    },\n\n    labels: {\n      type: Object,\n      default() {\n        return {\n          submit: '提交',\n          cancel: '取消',\n        }\n      },\n    },\n\n    withCredentials: {\n      type: Boolean,\n      default: false,\n    },\n\n    inline: {\n      type: Boolean,\n      default: false,\n    },\n  },\n\n  data() {\n    return {\n      cropper: undefined,\n      dataUrl: undefined,\n      filename: undefined,\n    }\n  },\n\n  computed: {\n    cleanedMimes() {\n      if (!this.mimes) throw new Error('vue-avatar-cropper: mimes prop cannot be empty')\n\n      return this.mimes.trim().toLowerCase()\n    },\n  },\n\n  watch: {\n    trigger(value) {\n      if (!value) return\n\n      if (this.file) {\n        this.onFileChange(this.file)\n      } else {\n        this.pickImage()\n      }\n\n      this.$emit('triggered', false)\n    },\n  },\n\n  mounted() {\n    this.$emit('triggered', false)\n  },\n\n  methods: {\n    destroy() {\n      if (this.cropper) this.cropper.destroy()\n\n      if (this.$refs.input) this.$refs.input.value = ''\n\n      this.dataUrl = undefined\n    },\n\n    submit() {\n      this.$emit('submit')\n\n      if (this.uploadUrl) {\n        this.uploadImage()\n      } else if (this.uploadHandler) {\n        this.uploadHandler(this.cropper)\n      } else {\n        this.$emit('error', 'No upload handler found.', 'user')\n      }\n\n      this.destroy()\n    },\n\n    cancel(){\n        this.$emit('cancel')\n        this.destroy()\n    },\n\n    onImgElementError() {\n      this.$emit('error', 'File loading failed.', 'load')\n      this.destroy()\n    },\n\n    pickImage() {\n      if (this.$refs.input) this.$refs.input.click()\n    },\n\n    onFileChange(file) {\n      if (this.cleanedMimes === 'image/*') {\n        if (file.type.split('/')[0] !== 'image') {\n          this.$emit('error', 'File type not correct.', 'user')\n          return\n        }\n      } else if (this.cleanedMimes) {\n        const correctType = this.cleanedMimes.split(', ').find((mime) => mime === file.type)\n\n        if (!correctType) {\n          this.$emit('error', 'File type not correct.', 'user')\n          return\n        }\n      }\n\n      const reader = new FileReader()\n      reader.onload = (e) => {\n        this.dataUrl = e.target.result\n      }\n\n      reader.readAsDataURL(file)\n\n      this.filename = file.name || 'unknown'\n      this.mimeType = this.mimeType || file.type\n      this.$emit('changed', file, reader)\n    },\n\n    onFileInputChange(e) {\n      if (!e.target.files || !e.target.files[0]) return\n\n      this.onFileChange(e.target.files[0])\n    },\n\n    createCropper() {\n      this.cropper = new Cropper(this.$refs.img, this.cropperOptions)\n    },\n\n    uploadImage() {\n      this.cropper.getCroppedCanvas(this.outputOptions).toBlob(\n        (blob) => {\n          const form = new FormData()\n          const xhr = new XMLHttpRequest()\n          const data = Object.assign({}, this.uploadFormData)\n\n          xhr.withCredentials = this.withCredentials\n\n          for (const key in data) {\n            form.append(key, data[key])\n          }\n\n          form.append(this.uploadFormName, blob, this.filename)\n\n          this.$emit('uploading', form, xhr)\n\n          xhr.open(this.requestMethod, this.uploadUrl, true)\n\n          for (const header in this.uploadHeaders) {\n            xhr.setRequestHeader(header, this.uploadHeaders[header])\n          }\n\n          xhr.onreadystatechange = () => {\n            if (xhr.readyState === 4) {\n              let response = ''\n\n              try {\n                response = JSON.parse(xhr.responseText)\n              } catch (err) {\n                response = xhr.responseText\n              }\n\n              this.$emit('completed', response, form, xhr)\n\n              if ([200, 201, 204].indexOf(xhr.status) > -1) {\n                this.$emit('uploaded', response, form, xhr)\n              } else {\n                this.$emit('error', 'Image upload fail.', 'upload', xhr)\n              }\n            }\n          }\n\n          xhr.send(form)\n        },\n        this.outputMime,\n        this.outputQuality,\n      )\n    },\n  },\n}\n</script>\n\n<style lang=\"scss\">\n.avatar-cropper {\n  .avatar-cropper-overlay {\n    text-align: center;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    z-index: 99999;\n  }\n\n  .avatar-cropper-overlay-inline{\n    position: initial;\n  }\n\n  .avatar-cropper-img-input {\n    display: none;\n  }\n\n  .avatar-cropper-close {\n    float: right;\n    padding: 20px;\n    font-size: 3rem;\n    color: #fff;\n    font-weight: 100;\n    text-shadow: 0px 1px rgba(40, 40, 40, 0.3);\n  }\n\n  .avatar-cropper-mark {\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background: rgba(0, 0, 0, 0.1);\n  }\n\n  .avatar-cropper-container {\n    background: #fff;\n    z-index: 999;\n    box-shadow: 1px 1px 5px rgba(100, 100, 100, 0.14);\n\n    .avatar-cropper-image-container {\n      position: relative;\n      max-width: 400px;\n      height: 300px;\n    }\n\n    img {\n      max-width: 100%;\n      height: 100%;\n    }\n\n    .avatar-cropper-footer {\n      display: flex;\n      align-items: stretch;\n      align-content: stretch;\n      justify-content: space-between;\n\n      .avatar-cropper-btn {\n        width: 50%;\n        padding: 15px 0;\n        cursor: pointer;\n        border: none;\n        background: transparent;\n        outline: none;\n\n        &:hover {\n          background-color: #2aabd2;\n          color: #fff;\n        }\n      }\n    }\n  }\n}\n</style>\n",".avatar-cropper .avatar-cropper-overlay {\n  text-align: center;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  z-index: 99999;\n}\n.avatar-cropper .avatar-cropper-overlay-inline {\n  position: initial;\n}\n.avatar-cropper .avatar-cropper-img-input {\n  display: none;\n}\n.avatar-cropper .avatar-cropper-close {\n  float: right;\n  padding: 20px;\n  font-size: 3rem;\n  color: #fff;\n  font-weight: 100;\n  text-shadow: 0px 1px rgba(40, 40, 40, 0.3);\n}\n.avatar-cropper .avatar-cropper-mark {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.1);\n}\n.avatar-cropper .avatar-cropper-container {\n  background: #fff;\n  z-index: 999;\n  box-shadow: 1px 1px 5px rgba(100, 100, 100, 0.14);\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-image-container {\n  position: relative;\n  max-width: 400px;\n  height: 300px;\n}\n.avatar-cropper .avatar-cropper-container img {\n  max-width: 100%;\n  height: 100%;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer {\n  display: flex;\n  align-items: stretch;\n  align-content: stretch;\n  justify-content: space-between;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer .avatar-cropper-btn {\n  width: 50%;\n  padding: 15px 0;\n  cursor: pointer;\n  border: none;\n  background: transparent;\n  outline: none;\n}\n.avatar-cropper .avatar-cropper-container .avatar-cropper-footer .avatar-cropper-btn:hover {\n  background-color: #2aabd2;\n  color: #fff;\n}\n\n/*# sourceMappingURL=vue-avatar-cropper.vue.map */"]}, media: undefined });
 
     };
     /* scoped */

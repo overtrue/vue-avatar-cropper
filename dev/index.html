@@ -24,7 +24,7 @@
         <button @click="() => renderAvatarCropper = !renderAvatarCropper">
           {{ renderAvatarCropper ? 'Unmount' : 'Mount' }} avatar cropper
         </button>
-        <avatar-cropper v-if="renderAvatarCropper" v-model="trigger" upload-url="/files/upload" @uploaded="handleUploaded" @error="consoleError" />
+        <avatar-cropper v-if="renderAvatarCropper" v-model="trigger" mimes="" upload-url="/files/upload" @uploaded="handleUploaded" @error="consoleError" />
       </div>
     </div>
   </div>
