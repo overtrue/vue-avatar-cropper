@@ -136,7 +136,6 @@ export default {
     mimes: {
       type: String,
       default: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon',
-      required: true,
     },
 
     capture: {
