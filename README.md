@@ -4,7 +4,7 @@
 
 ![image](https://user-images.githubusercontent.com/1472352/28398207-b32907b0-6d38-11e7-998a-32d34362b341.png)
 
-[![Edit test-project](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/overtrue/vue-avatar-cropper-demo/tree/master/)
+[![Edit test-project](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/vue-avatar-cropper-demo-dptno)
 
 ## Basic usage
 
@@ -162,7 +162,7 @@ export default {
 
 :rocket: There is an online demo:
 
-[![Edit test-project](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/overtrue/vue-avatar-cropper-demo/tree/master/)
+[![Edit test-project](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/vue-avatar-cropper-demo-dptno)
 
 ## License
 
