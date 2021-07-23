@@ -1,7 +1,7 @@
 {
   "name": "vue-avatar-cropper",
   "description": "A simple and elegant avatar cropping and upload plugin",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "main": "./dist/vue-avatar-cropper.umd.js",
   "module": "./dist/vue-avatar-cropper.esm.js",
   "unpkg": "./dist/vue-avatar-cropper.umd.js",
@@ -43,51 +43,31 @@
   "devDependencies": {
     "@babel/core": "^7.13.16",
     "@babel/preset-env": "^7.13.15",
-    "@rollup/plugin-node-resolve": "^11.2.1",
-    "@size-limit/preset-small-lib": "^4.10.2",
-    "autoprefixer": "^9.8.6",
-    "cross-env": "^7.0.2",
-    "css-loader": "^6.2.0",
+    "@vue/compiler-sfc": "^3.2.0-beta.5",
+    "autoprefixer": "^10.3.1",
     "eslint": "^7.30.0",
     "eslint-plugin-vue": "^7.13.0",
+    "node-sass": "^6.0.1",
     "npm-run-all": "^4.1.5",
-    "postcss": "^8.1",
-    "rollup": "^2.18.0",
+    "postcss": "^8.3.6",
+    "rollup": "^2.53.3",
     "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-styles": "^3.14.1",
-    "rollup-plugin-terser": "^6.1.0",
-    "rollup-plugin-vue": "^5.1.9",
-    "sass": "^1.32.11",
-    "sass-loader": "^12.1.0",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-vue": "5.1.9",
     "sirv-cli": "^1.0.1",
-    "size-limit": "^4.5.2",
-    "style-loader": "^3.0.0",
-    "vue": "^2.4.2",
     "vue-eslint-parser": "^7.8.0",
-    "vue-html-loader": "^1.2.4",
-    "vue-loader": "^16.1.1",
-    "vue-style-loader": "^4.1.2",
-    "vue-template-compiler": "^2.4.2"
+    "vue-template-compiler": "^2.6.14"
   },
   "dependencies": {
-    "cropperjs": "^1.5.12"
+    "cropperjs": "^1.5.12",
+    "vue": "^2.6.14"
   },
   "author": {
     "name": "overtrue",
     "email": "i@overtrue.me",
     "url": "https://overtrue.me"
   },
-  "size-limit": [
-    {
-      "path": "dist/tinybox.umd.js",
-      "limit": "3333 B",
-      "webpack": false
-    },
-    {
-      "path": "dist/tinybox.esm.js",
-      "limit": "3333 B"
-    }
-  ],
   "engines": {
     "node": ">=10"
   },
