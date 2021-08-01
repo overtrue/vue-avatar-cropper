@@ -67,7 +67,7 @@
 ### Props
 
  Property Name | Type | Description
- - | - | -
+ --- | --- | ---
  `trigger` | Boolean | Set to true to trigger the avatar cropper, this prop is used for `v-model`. Default: `false`
  `file` | File | File to use instead of prompting the user to upload one
  `upload-url` | String | URL to upload the file to
