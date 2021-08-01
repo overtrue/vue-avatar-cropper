@@ -33,7 +33,7 @@
     new Vue({
       el: "#app",
 
-      data: function () {
+      data() {
         return {
           trigger: false,
           userAvatar: undefined,
@@ -42,12 +42,12 @@
       },
 
       methods: {
-        handleUploaded() {
-          console.log("uploaded")
+        handleUploaded(event) {
+          console.log("uploaded", event)
         },
 
-        consoleError(...errorParts) {
-          console.log("Avatar Cropper Error", errorParts)
+        consoleError({ type, message }) {
+          console.log(`Avatar Cropper Error\nType: ${type}\nMessage: ${message}`)
         },
       },
     });

@@ -85,24 +85,24 @@ export default {
       type: String,
     },
 
-    requestMethod: {
-      type: String,
-      default: 'POST',
-    },
-
-    uploadHeaders: {
+    requestOptions: {
       type: Object,
+      default() {
+        return {
+          method: 'POST',
+        }
+      },
     },
 
-    uploadFormName: {
+    uploadFileField: {
       type: String,
       default: 'file',
     },
 
     uploadFormData: {
-      type: Object,
+      type: FormData,
       default() {
-        return {}
+        return new FormData()
       },
     },
 
@@ -146,15 +146,10 @@ export default {
       type: Object,
       default() {
         return {
-          submit: '提交',
-          cancel: '取消',
+          submit: 'Ok',
+          cancel: 'Cancel',
         }
       },
-    },
-
-    withCredentials: {
-      type: Boolean,
-      default: false,
     },
 
     inline: {
@@ -175,7 +170,9 @@ export default {
     cleanedMimes() {
       if (!this.mimes) throw new Error('vue-avatar-cropper: mimes prop cannot be empty')
 
-      return this.mimes.trim().toLowerCase()
+      return this.mimes
+        .trim()
+        .toLowerCase()
     },
   },
 
@@ -214,7 +211,10 @@ export default {
       } else if (this.uploadHandler) {
         this.uploadHandler(this.cropper)
       } else {
-        this.$emit('error', 'No upload handler found.', 'user')
+        this.$emit('error', {
+          type: 'user',
+          message: 'No upload handler found',
+        })
       }
 
       this.destroy()
@@ -226,7 +226,10 @@ export default {
     },
 
     onImgElementError() {
-      this.$emit('error', 'File loading failed.', 'load')
+      this.$emit('error', {
+        type: 'load',
+        message: 'File loading failed',
+      })
       this.destroy()
     },
 
@@ -237,14 +240,22 @@ export default {
     onFileChange(file) {
       if (this.cleanedMimes === 'image/*') {
         if (file.type.split('/')[0] !== 'image') {
-          this.$emit('error', 'File type not correct.', 'user')
+          this.$emit('error', {
+            type: 'user',
+            message: 'File type not correct',
+          })
           return
         }
       } else if (this.cleanedMimes) {
-        const correctType = this.cleanedMimes.split(', ').find((mime) => mime === file.type)
+        const correctType = this.cleanedMimes
+          .split(', ')
+          .find((mime) => mime === file.type)
 
         if (!correctType) {
-          this.$emit('error', 'File type not correct.', 'user')
+          this.$emit('error', {
+            type: 'user',
+            message: 'File type not correct',
+          })
           return
         }
       }
@@ -258,7 +269,10 @@ export default {
 
       this.filename = file.name || 'unknown'
       this.mimeType = this.mimeType || file.type
-      this.$emit('changed', file, reader)
+      this.$emit('changed', {
+        file,
+        reader,
+      })
     },
 
     onFileInputChange(e) {
@@ -268,53 +282,68 @@ export default {
     },
 
     createCropper() {
-      this.cropper = new Cropper(this.$refs.img, this.cropperOptions)
+      this.cropper = new Cropper(
+        this.$refs.img,
+        this.cropperOptions,
+      )
     },
 
     uploadImage() {
-      this.cropper.getCroppedCanvas(this.outputOptions).toBlob(
-        (blob) => {
+      this.cropper
+        .getCroppedCanvas(this.outputOptions)
+        .toBlob(async (blob) => {
           const form = new FormData()
-          const xhr = new XMLHttpRequest()
-          const data = Object.assign({}, this.uploadFormData)
 
-          xhr.withCredentials = this.withCredentials
-
-          for (const key in data) {
-            form.append(key, data[key])
+          for (const [key, value] in this.uploadFormData.entries()) {
+            form.append(key, value)
           }
 
           form.append(this.uploadFormName, blob, this.filename)
 
-          this.$emit('uploading', form, xhr)
+          const requestOptions = Object.assign(
+            {
+              body: form,
+            },
+            this.requestOptions,
+          )
 
-          xhr.open(this.requestMethod, this.uploadUrl, true)
+          const request = new Request(
+            this.uploadUrl,
+            requestOptions,
+          )
 
-          for (const header in this.uploadHeaders) {
-            xhr.setRequestHeader(header, this.uploadHeaders[header])
+          const reqPromise = fetch(request)
+
+          this.$emit('uploading', {
+            form,
+            request,
+            response: reqPromise,
+          })
+
+          const response = await reqPromise
+
+          this.$emit('completed', {
+            form,
+            request,
+            response,
+          })
+
+          if (response.ok) {
+            this.$emit('uploaded', {
+              form,
+              request,
+              response,
+            })
+          } else {
+            this.$emit('error', {
+              type: 'upload',
+              message: 'Image upload fail',
+              context: {
+                request,
+                response,
+              },
+            })
           }
-
-          xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-              let response = ''
-
-              try {
-                response = JSON.parse(xhr.responseText)
-              } catch (err) {
-                response = xhr.responseText
-              }
-
-              this.$emit('completed', response, form, xhr)
-
-              if ([200, 201, 204].indexOf(xhr.status) > -1) {
-                this.$emit('uploaded', response, form, xhr)
-              } else {
-                this.$emit('error', 'Image upload fail.', 'upload', xhr)
-              }
-            }
-          }
-
-          xhr.send(form)
         },
         this.outputMime,
         this.outputQuality,

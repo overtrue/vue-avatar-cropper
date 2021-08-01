@@ -1,6 +1,6 @@
 {
   "name": "vue-avatar-cropper",
-  "description": "A simple and elegant avatar cropping and upload plugin",
+  "description": "A simple and elegant component to crop and upload avatars",
   "version": "3.0.6",
   "main": "./dist/vue-avatar-cropper.umd.js",
   "module": "./dist/vue-avatar-cropper.esm.js",
@@ -24,7 +24,6 @@
     "dev": "run-p dev:build dev:serve",
     "dev:net": "run-p dev:build 'dev:serve --host'",
     "test:lint": "eslint .",
-    "test:size": "size-limit",
     "pretest": "run-s build",
     "test": "run-p --aggregate-output test:*"
   },
