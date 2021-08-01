@@ -66,29 +66,29 @@
 
 ### Props
 
- Property Name | Type | Description
- --- | --- | ---
- `trigger` | Boolean | Set to true to trigger the avatar cropper, this prop is used for `v-model`. Default: `false`
- `file` | File | File to use instead of prompting the user to upload one
- `upload-url` | String | URL to upload the file to
- `upload-file-field` | String | `FormData` field to use for the file. Default: `'file'`
- `upload-form-data` | FormData | Additional [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData). Default: `new FormData()`
- `upload-handler` | Function | Handler to replace default upload handler, the argument is [cropperJS](https://github.com/fengyuanchen/cropperjs) instance.
- `request-options` | Object | Options passed to the `init` parameter of the [Request()](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) constructor. Use this to set the method, headers, etc. Default: `{ method: 'POST' }`
- `cropper-options` | Object | Options passed to the [cropperJS](https://github.com/fengyuanchen/cropperjs#options) instance. <br>Default: `{`
-  | | | `aspectRatio: 1,`
-  | | | `autoCropArea: 1,`
-  | | | `viewMode: 1,`
-  | | | `movable: false,`
-  | | | `zoomable: false`
-  | | | `}`
- `output-options` | Object | Options passed to the [cropper.getCroppedCanvas()](https://github.com/fengyuanchen/cropperjs#getcroppedcanvasoptions) method. <br>Default: `{}`. Recommended use-case is specifying an output size, for instance: `{ width: 512, height: 512 }`
- `output-mime` | String | The resulting avatar image mime type. Default: `null`
- `output-quality` | Number | The resulting avatar image quality [0 - 1]. Default: `0.9`<br>(if the output-mime property is `'image/jpeg'` or `'image/webp'`)
- `mimes` | String | Allowed image formats. Default: <br>`'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'`
- `capture` | String | Capture attribute for the file input. Forces mobile users to take a new picture with the back(Use value `'environment'`) or front(Use value `'user'`) camera
- `labels` | Object | Label for buttons. Default: `{ submit: 'Ok', cancel: 'Cancel' }`
- `inline` | Boolean | If true component will be displayed as inline elemenet. Default: `false`
+Property Name | Type | Description
+--- | --- | ---
+`trigger` | Boolean | Set to true to trigger the avatar cropper, this prop is used for `v-model`. Default: `false`
+`file` | File | File to use instead of prompting the user to upload one
+`upload-url` | String | URL to upload the file to
+`upload-file-field` | String | `FormData` field to use for the file. Default: `'file'`
+`upload-form-data` | FormData | Additional [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData). Default: `new FormData()`
+`upload-handler` | Function | Handler to replace default upload handler, the argument is [cropperJS](https://github.com/fengyuanchen/cropperjs) instance.
+`request-options` | Object | Options passed to the `init` parameter of the [Request()](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) constructor. Use this to set the method, headers, etc. Default: `{ method: 'POST' }`
+`cropper-options` | Object | Options passed to the [cropperJS](https://github.com/fengyuanchen/cropperjs#options) instance. <br>Default: `{`
+ | | | &nbsp;&nbsp;&nbsp;&nbsp;`aspectRatio: 1,`
+ | | | &nbsp;&nbsp;&nbsp;&nbsp;`autoCropArea: 1,`
+ | | | &nbsp;&nbsp;&nbsp;&nbsp;`viewMode: 1,`
+ | | | &nbsp;&nbsp;&nbsp;&nbsp;`movable: false,`
+ | | | &nbsp;&nbsp;&nbsp;&nbsp;`zoomable: false`
+ | | | `}`
+`output-options` | Object | Options passed to the [cropper.getCroppedCanvas()](https://github.com/fengyuanchen/cropperjs#getcroppedcanvasoptions) method. <br>Default: `{}`. Recommended use-case is specifying an output size, for instance: `{ width: 512, height: 512 }`
+`output-mime` | String | The resulting avatar image mime type. Default: `null`
+`output-quality` | Number | The resulting avatar image quality [0 - 1]. Default: `0.9`<br>(if the output-mime property is `'image/jpeg'` or `'image/webp'`)
+`mimes` | String | Allowed image formats. Default: <br>`'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'`
+`capture` | String | Capture attribute for the file input. Forces mobile users to take a new picture with the back(Use value `'environment'`) or front(Use value `'user'`) camera
+`labels` | Object | Label for buttons. Default: `{ submit: 'Ok', cancel: 'Cancel' }`
+`inline` | Boolean | If true component will be displayed as inline elemenet. Default: `false`
 
 ### Events
 
