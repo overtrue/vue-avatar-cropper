@@ -106,17 +106,17 @@ Property Name | Type | Description
 - **uploading** before submit upload request, parameter is an object containing:
   - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
   - `request` object, [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) instance.
-  - `response` object, [Promise<Response>](https://developer.mozilla.org/en-US/docs/Web/API/Response)
+  - `response` object, [Promise](https://developer.mozilla.org/en-US/docs/Web/API/Promise) which resolves to a [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) instance.
 
 - **uploaded** after request is successful, parameter is an object containing:
   - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
   - `request` object, [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) instance.
-  - `response` object, [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)
+  - `response` object, [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) instance.
 
 - **completed** after request has completed, parameter is an object containing:
   - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
   - `request` object, [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) instance.
-  - `response` object, [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)
+  - `response` object, [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) instance.
 
 - **error** something went wrong, parameter is an object containing:
   - `message` error message.
