@@ -66,38 +66,36 @@
 
 ### Props
 
- Property Name | Type | Description
- -------- | -------- | --------
- `trigger` | Boolean | Set to true to trigger the avatar cropper, this prop is used for `v-model`, default: `false`
- `file` | File | File to use instead of prompting the user to upload one
- `upload-url` | String | URL to upload the file to
- `upload-form-name` | String | Form name of upload request, default: 'file'
- `upload-form-data` | Object | Additional form data, default: `{}`
- `upload-handler` | Function | Handler to replace default upload handler, the argument is [cropperJS](https://github.com/fengyuanchen/cropperjs) instance.
- `upload-headers` | Object | Headers of upload request, default: `{}`
- `request-method` | String | Request method to use when uploading, default: `'POST'`
- `cropper-options` | Object | Options passed to the [cropperJS](https://github.com/fengyuanchen/cropperjs#options) instance, <br>default: `{`
-   | | |    `aspectRatio: 1,`
-   | | |    `autoCropArea: 1,`
-   | | |    `viewMode: 1,`
-   | | |    `movable: false,`
-   | | |    `zoomable: false`
-   | | |    `}`
- `output-options` | Object | Options passed to the [cropper.getCroppedCanvas()](https://github.com/fengyuanchen/cropperjs#getcroppedcanvasoptions) method, <br>default: `{}`. Recommended use-case is specifying an output size, for instance: `{ width: 512, height: 512 }`
- `output-mime` | String | The resulting avatar image mime type, default: `null`
- `output-quality` | Number | The resulting avatar image quality [0 - 1], default: `0.9`<br>(if the output-mime property is `'image/jpeg'` or `'image/webp'`)
- `mimes` | String | Allowed image formats, default: <br>`'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'`
- `capture` | String | Capture attribute for the file input. Forces mobile users to take a new picture with the back(Use value `'environment'`) or front(Use value `'user'`) camera
- `labels` | Object | Label for buttons, default: `{ submit: '提交', cancel: '取消'}`
- `with-credentials` | Boolean | The `with-credentials` property that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates, default: `false`
- `inline` | Boolean | If true component will be displayed as inline elemenet, default: `false`
+Property Name | Type | Description
+- | - | -
+`trigger` | Boolean | Set to true to trigger the avatar cropper, this prop is used for `v-model`. Default: `false`
+`file` | File | File to use instead of prompting the user to upload one
+`upload-url` | String | URL to upload the file to
+`upload-file-field` | String | `FormData` field to use for the file. Default: `'file'`
+`upload-form-data` | FormData | Additional [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData). Default: `new FormData()`
+`upload-handler` | Function | Handler to replace default upload handler, the argument is [cropperJS](https://github.com/fengyuanchen/cropperjs) instance.
+`request-options` | Object | Options passed to the `init` parameter of the [Request()](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) constructor. Use this to set the method, headers, etc. Default: `{ method: 'POST' }`
+`cropper-options` | Object | Options passed to the [cropperJS](https://github.com/fengyuanchen/cropperjs#options) instance. <br>Default: `{`
+ | | | &nbsp;&nbsp;&nbsp;&nbsp;`aspectRatio: 1,`
+ | | | &nbsp;&nbsp;&nbsp;&nbsp;`autoCropArea: 1,`
+ | | | &nbsp;&nbsp;&nbsp;&nbsp;`viewMode: 1,`
+ | | | &nbsp;&nbsp;&nbsp;&nbsp;`movable: false,`
+ | | | &nbsp;&nbsp;&nbsp;&nbsp;`zoomable: false`
+ | | | `}`
+`output-options` | Object | Options passed to the [cropper.getCroppedCanvas()](https://github.com/fengyuanchen/cropperjs#getcroppedcanvasoptions) method. <br>Default: `{}`. Recommended use-case is specifying an output size, for instance: `{ width: 512, height: 512 }`
+`output-mime` | String | The resulting avatar image mime type. Default: `null`
+`output-quality` | Number | The resulting avatar image quality [0 - 1]. Default: `0.9`<br>(if the output-mime property is `'image/jpeg'` or `'image/webp'`)
+`mimes` | String | Allowed image formats. Default: <br>`'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'`
+`capture` | String | Capture attribute for the file input. Forces mobile users to take a new picture with the back(Use value `'environment'`) or front(Use value `'user'`) camera
+`labels` | Object | Label for buttons. Default: `{ submit: 'Ok', cancel: 'Cancel' }`
+`inline` | Boolean | If true component will be displayed as inline elemenet. Default: `false`
 
 ### Events
 
-- **triggered** `trigger` prop changed, used for `v-model`
+- **triggered** `trigger` prop changed, used for `v-model`, parameter:
   - `value` boolean.
 
-- **changed** user picked a file
+- **changed** user picked a file, parameter is an object containing:
   - `file` object, [File](https://developer.mozilla.org/zh-CN/docs/Web/API/File) object.
   - `reader` object, [FileReader](https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader)
 
@@ -105,26 +103,27 @@
 
 - **cancel** when user decides to cancel the upload
 
-- **uploading** before submit upload request, params:
+- **uploading** before submit upload request, parameter is an object containing:
   - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
-  - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
+  - `request` object, [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) instance.
+  - `response` object, [Promise<Response>](https://developer.mozilla.org/en-US/docs/Web/API/Response)
 
-- **uploaded** after request is successful, params:
-  - `response` object, json parsed from `xhr.responseText`
+- **uploaded** after request is successful, parameter is an object containing:
   - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
-  - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
+  - `request` object, [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) instance.
+  - `response` object, [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)
 
-- **completed** after request has completed, params:
-  - `response` object, json parsed from `xhr.responseText`
+- **completed** after request has completed, parameter is an object containing:
   - `form` object, [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
-  - `xhr`  object, [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance.
+  - `request` object, [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) instance.
+  - `response` object, [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)
 
-- **error** something went wrong, params:
+- **error** something went wrong, parameter is an object containing:
   - `message` error message.
   - `type` error type, example: `'load'`/`'upload'`/`'user'`.
   - `context` context data.
 
-You can listen to these events like this:
+You can listen for these events like this:
 
 ```html
 <avatar-cropper
@@ -133,7 +132,7 @@ You can listen to these events like this:
   @uploading="handleUploading"
   @uploaded="handleUploaded"
   @completed="handleCompleted"
-  @error="handlerError"
+  @error="handleError"
 />
 ```
 
@@ -142,18 +141,21 @@ export default {
   //...
   methods: {
     ...
-    handleUploading(form, xhr) {
-      form.append('foo', 'bar')
+    handleUploading({ form, request, response }) {
+      // show a loader
     },
-    handleUploaded(response, form, xhr) {
+
+    handleUploaded({ form, request, response }) {
       // update user avatar attribute
     },
-    handleCompleted(response, form, xhr) {
-      // xhr.status
+
+    handleCompleted({ form, request, response }) {
+      // close the loader
     },
-    handlerError(message, type, xhr) {
-      if (type == 'upload') {
-        // xhr.response...
+
+    handleError({ message, type, context}) {
+      if (type === 'upload') {
+        const { request, response } = context
       }
     }
   },
