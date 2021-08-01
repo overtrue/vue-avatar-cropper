@@ -76,11 +76,11 @@
  `upload-handler` | Function | Handler to replace default upload handler, the argument is [cropperJS](https://github.com/fengyuanchen/cropperjs) instance.
  `request-options` | Object | Options passed to the `init` parameter of the [Request()](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) constructor. Use this to set the method, headers, etc. Default: `{ method: 'POST' }`
  `cropper-options` | Object | Options passed to the [cropperJS](https://github.com/fengyuanchen/cropperjs#options) instance. <br>Default: `{`
-  | | | &nbsp;&nbsp;&nbsp;&nbsp;`aspectRatio: 1,`
-  | | | &nbsp;&nbsp;&nbsp;&nbsp;`autoCropArea: 1,`
-  | | | &nbsp;&nbsp;&nbsp;&nbsp;`viewMode: 1,`
-  | | | &nbsp;&nbsp;&nbsp;&nbsp;`movable: false,`
-  | | | &nbsp;&nbsp;&nbsp;&nbsp;`zoomable: false`
+  | | | `aspectRatio: 1,`
+  | | | `autoCropArea: 1,`
+  | | | `viewMode: 1,`
+  | | | `movable: false,`
+  | | | `zoomable: false`
   | | | `}`
  `output-options` | Object | Options passed to the [cropper.getCroppedCanvas()](https://github.com/fengyuanchen/cropperjs#getcroppedcanvasoptions) method. <br>Default: `{}`. Recommended use-case is specifying an output size, for instance: `{ width: 512, height: 512 }`
  `output-mime` | String | The resulting avatar image mime type. Default: `null`
