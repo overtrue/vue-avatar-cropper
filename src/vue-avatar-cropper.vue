@@ -298,7 +298,7 @@ export default {
             form.append(key, value)
           }
 
-          form.append(this.uploadFormName, blob, this.filename)
+          form.append(this.uploadFileField, blob, this.filename)
 
           const requestOptions = Object.assign(
             {
