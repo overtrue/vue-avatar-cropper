@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel'
+import { getBabelOutputPlugin } from '@rollup/plugin-babel'
 import { terser } from 'rollup-plugin-terser'
 import vue from 'rollup-plugin-vue'
 import postcss from 'rollup-plugin-postcss'
@@ -37,11 +37,6 @@ const plugins = [
       autoprefixer,
     ],
   }),
-  production && babel({
-    presets: [
-      '@babel/env',
-    ],
-  }),
 ]
 
 if (production) {
@@ -50,15 +45,29 @@ if (production) {
       file: outFilename('esm'),
       format: 'esm',
       name,
-      plugins: [terser({ output: { ecma: 6 } })],
+      plugins: [
+        getBabelOutputPlugin({
+          presets: [
+            '@babel/env',
+          ],
+        }),
+        terser({ output: { ecma: 6 } }),
+      ],
       globals,
     },
 
     {
       file: outFilename('umd'),
-      format: 'umd',
+      format: 'esm',
       name,
-      plugins: [terser({ output: { ecma: 5 } })],
+      plugins: [
+        getBabelOutputPlugin({
+          presets: [
+            ['@babel/env', { modules: 'umd' }],
+          ],
+        }),
+        terser({ output: { ecma: 5 } }),
+      ],
       globals,
     },
   )
