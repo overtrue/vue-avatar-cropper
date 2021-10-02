@@ -2,7 +2,7 @@
   <div class="avatar-cropper">
     <div
       class="avatar-cropper-overlay"
-      :class="{'avatar-cropper-overlay-inline': inline}"
+      :class="{ 'avatar-cropper-overlay-inline': inline }"
       v-if="dataUrl"
     >
       <div class="avatar-cropper-mark" v-if="!inline">
@@ -11,7 +11,8 @@
           class="avatar-cropper-close"
           :title="labels.cancel"
           href="javascript:;"
-        >&times;</a>
+          >&times;</a
+        >
       </div>
 
       <div class="avatar-cropper-container">
@@ -26,17 +27,11 @@
         </div>
 
         <div class="avatar-cropper-footer">
-          <button
-            @click.stop.prevent="cancel"
-            class="avatar-cropper-btn"
-          >
+          <button @click.stop.prevent="cancel" class="avatar-cropper-btn">
             {{ labels.cancel }}
           </button>
 
-          <button
-            @click.stop.prevent="submit"
-            class="avatar-cropper-btn"
-          >
+          <button @click.stop.prevent="submit" class="avatar-cropper-btn">
             {{ labels.submit }}
           </button>
         </div>
@@ -168,11 +163,10 @@ export default {
 
   computed: {
     cleanedMimes() {
-      if (!this.mimes) throw new Error('vue-avatar-cropper: mimes prop cannot be empty')
+      if (!this.mimes)
+        throw new Error('vue-avatar-cropper: mimes prop cannot be empty')
 
-      return this.mimes
-        .trim()
-        .toLowerCase()
+      return this.mimes.trim().toLowerCase()
     },
   },
 
@@ -220,9 +214,9 @@ export default {
       this.destroy()
     },
 
-    cancel(){
-        this.$emit('cancel')
-        this.destroy()
+    cancel() {
+      this.$emit('cancel')
+      this.destroy()
     },
 
     onImgElementError() {
@@ -249,7 +243,7 @@ export default {
       } else if (this.cleanedMimes) {
         const correctType = this.cleanedMimes
           .split(', ')
-          .find((mime) => mime === file.type)
+          .find(mime => mime === file.type)
 
         if (!correctType) {
           this.$emit('error', {
@@ -261,7 +255,7 @@ export default {
       }
 
       const reader = new FileReader()
-      reader.onload = (e) => {
+      reader.onload = e => {
         this.dataUrl = e.target.result
       }
 
@@ -282,16 +276,12 @@ export default {
     },
 
     createCropper() {
-      this.cropper = new Cropper(
-        this.$refs.img,
-        this.cropperOptions,
-      )
+      this.cropper = new Cropper(this.$refs.img, this.cropperOptions)
     },
 
     uploadImage() {
-      this.cropper
-        .getCroppedCanvas(this.outputOptions)
-        .toBlob(async (blob) => {
+      this.cropper.getCroppedCanvas(this.outputOptions).toBlob(
+        async blob => {
           const form = new FormData()
 
           for (const [key, value] in this.uploadFormData.entries()) {
@@ -307,10 +297,7 @@ export default {
             this.requestOptions,
           )
 
-          const request = new Request(
-            this.uploadUrl,
-            requestOptions,
-          )
+          const request = new Request(this.uploadUrl, requestOptions)
 
           const reqPromise = fetch(request)
 
@@ -368,7 +355,7 @@ export default {
     z-index: 99999;
   }
 
-  .avatar-cropper-overlay-inline{
+  .avatar-cropper-overlay-inline {
     position: initial;
   }
 
