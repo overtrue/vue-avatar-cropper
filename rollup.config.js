@@ -1,15 +1,14 @@
 import { getBabelOutputPlugin } from '@rollup/plugin-babel'
-import { terser } from 'rollup-plugin-terser'
 import vue from 'rollup-plugin-vue'
 import postcss from 'rollup-plugin-postcss'
 import autoprefixer from 'autoprefixer'
+import { terser } from 'rollup-plugin-terser'
 
 import pkg from './package.json'
 
 const name = 'vue-avatar-cropper'
 const outFilename = (infix) => `./dist/vue-avatar-cropper.${infix}.js`
 
-/* eslint-disable-next-line no-undef */
 const production = process.env.NODE_ENV === 'production' && !process.env.ROLLUP_WATCH
 
 const external = Object

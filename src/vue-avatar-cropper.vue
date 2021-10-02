@@ -53,6 +53,7 @@
 <script>
 import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
+import mime from 'mime'
 
 export default {
   name: 'AvatarCropper',
@@ -92,6 +93,10 @@ export default {
     uploadFileField: {
       type: String,
       default: 'file',
+    },
+
+    uploadFileName: {
+      type: [String, Function],
     },
 
     uploadFormData: {
@@ -157,7 +162,8 @@ export default {
     return {
       cropper: undefined,
       dataUrl: undefined,
-      filename: undefined,
+      fileName: undefined,
+      mimeType: undefined,
     }
   },
 
@@ -261,8 +267,9 @@ export default {
 
       reader.readAsDataURL(file)
 
-      this.filename = file.name || 'unknown'
-      this.mimeType = this.mimeType || file.type
+      this.fileName = file.name || 'unknown'
+      this.mimeType = file.type
+
       this.$emit('changed', {
         file,
         reader,
@@ -279,6 +286,33 @@ export default {
       this.cropper = new Cropper(this.$refs.img, this.cropperOptions)
     },
 
+    getFilename(blob) {
+      const extension = mime.getExtension(blob.type)
+
+      // Default logic
+      if (!this.uploadFileName) {
+        let actualFilename = this.fileName
+
+        const filenameParts = this.fileName
+        if (filenameParts.length > 1)
+          actualFilename = filenameParts.slice(0, -1).join('.')
+
+        return `${actualFilename}.${extension}`
+      }
+
+      // User provided filename
+      if (typeof this.uploadFileName === 'string') return this.uploadFileName
+
+      if (typeof this.uploadFileName === 'function')
+        return this.uploadFileName({
+          filename: this.fileName,
+          mime: blob.type,
+          extension,
+        })
+
+      return `unknown.${extension}`
+    },
+
     uploadImage() {
       this.cropper.getCroppedCanvas(this.outputOptions).toBlob(
         async blob => {
@@ -288,7 +322,7 @@ export default {
             form.append(key, value)
           }
 
-          form.append(this.uploadFileField, blob, this.filename)
+          form.append(this.uploadFileField, blob, this.getFilename(blob))
 
           const requestOptions = Object.assign(
             {
@@ -332,7 +366,7 @@ export default {
             })
           }
         },
-        this.outputMime,
+        this.outputMime || this.mimeType,
         this.outputQuality,
       )
     },
