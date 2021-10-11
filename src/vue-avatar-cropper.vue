@@ -53,7 +53,7 @@
 <script>
 import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
-import mime from 'mime'
+import mime from 'mime/lite'
 
 export default {
   name: 'AvatarCropper',
@@ -293,7 +293,7 @@ export default {
       if (!this.uploadFileName) {
         let actualFilename = this.fileName
 
-        const filenameParts = this.fileName
+        const filenameParts = this.fileName.split('.')
         if (filenameParts.length > 1)
           actualFilename = filenameParts.slice(0, -1).join('.')
 
