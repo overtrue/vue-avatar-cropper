@@ -69,9 +69,10 @@
 Property Name | Type | Description
 --- | --- | ---
 `trigger` | Boolean | Set to true to trigger the avatar cropper, this prop is used for `v-model`. Default: `false`
-`file` | File | File to use instead of prompting the user to upload one
+`file` | File | [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) to use instead of prompting the user to upload one
 `upload-url` | String | URL to upload the file to
-`upload-file-field` | String | `FormData` field to use for the file. Default: `'file'`
+`upload-file-field` | String | [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) field to use for the file. Default: `'file'`
+`upload-file-name` | String/Function | File name to use for the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) field. Can be `String` or `Function({ filename, mime, extension }) => String`. Default: Automatically determined from the uploaded [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)'s `name` property and the extension of the output MIME.
 `upload-form-data` | FormData | Additional [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData). Default: `new FormData()`
 `upload-handler` | Function | Handler to replace default upload handler, the argument is [cropperJS](https://github.com/fengyuanchen/cropperjs) instance.
 `request-options` | Object | Options passed to the `init` parameter of the [Request()](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) constructor. Use this to set the method, headers, etc. Default: `{ method: 'POST' }`
@@ -83,7 +84,7 @@ Property Name | Type | Description
  | | | &nbsp;&nbsp;&nbsp;&nbsp;`zoomable: false`
  | | | `}`
 `output-options` | Object | Options passed to the [cropper.getCroppedCanvas()](https://github.com/fengyuanchen/cropperjs#getcroppedcanvasoptions) method. <br>Default: `{}`. Recommended use-case is specifying an output size, for instance: `{ width: 512, height: 512 }`
-`output-mime` | String | The resulting avatar image mime type. Default: `null`
+`output-mime` | String | The resulting avatar image MIME type, if invalid `image/png` will be used. Default: `null`
 `output-quality` | Number | The resulting avatar image quality [0 - 1]. Default: `0.9`<br>(if the output-mime property is `'image/jpeg'` or `'image/webp'`)
 `mimes` | String | Allowed image formats. Default: <br>`'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'`
 `capture` | String | Capture attribute for the file input. Forces mobile users to take a new picture with the back(Use value `'environment'`) or front(Use value `'user'`) camera

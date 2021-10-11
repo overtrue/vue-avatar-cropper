@@ -2,7 +2,7 @@
   <div class="avatar-cropper">
     <div
       class="avatar-cropper-overlay"
-      :class="{'avatar-cropper-overlay-inline': inline}"
+      :class="{ 'avatar-cropper-overlay-inline': inline }"
       v-if="dataUrl"
     >
       <div class="avatar-cropper-mark" v-if="!inline">
@@ -11,7 +11,8 @@
           class="avatar-cropper-close"
           :title="labels.cancel"
           href="javascript:;"
-        >&times;</a>
+          >&times;</a
+        >
       </div>
 
       <div class="avatar-cropper-container">
@@ -26,17 +27,11 @@
         </div>
 
         <div class="avatar-cropper-footer">
-          <button
-            @click.stop.prevent="cancel"
-            class="avatar-cropper-btn"
-          >
+          <button @click.stop.prevent="cancel" class="avatar-cropper-btn">
             {{ labels.cancel }}
           </button>
 
-          <button
-            @click.stop.prevent="submit"
-            class="avatar-cropper-btn"
-          >
+          <button @click.stop.prevent="submit" class="avatar-cropper-btn">
             {{ labels.submit }}
           </button>
         </div>
@@ -58,6 +53,7 @@
 <script>
 import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
+import mime from 'mime/lite'
 
 export default {
   name: 'AvatarCropper',
@@ -97,6 +93,10 @@ export default {
     uploadFileField: {
       type: String,
       default: 'file',
+    },
+
+    uploadFileName: {
+      type: [String, Function],
     },
 
     uploadFormData: {
@@ -162,17 +162,17 @@ export default {
     return {
       cropper: undefined,
       dataUrl: undefined,
-      filename: undefined,
+      fileName: undefined,
+      mimeType: undefined,
     }
   },
 
   computed: {
     cleanedMimes() {
-      if (!this.mimes) throw new Error('vue-avatar-cropper: mimes prop cannot be empty')
+      if (!this.mimes)
+        throw new Error('vue-avatar-cropper: mimes prop cannot be empty')
 
-      return this.mimes
-        .trim()
-        .toLowerCase()
+      return this.mimes.trim().toLowerCase()
     },
   },
 
@@ -220,9 +220,9 @@ export default {
       this.destroy()
     },
 
-    cancel(){
-        this.$emit('cancel')
-        this.destroy()
+    cancel() {
+      this.$emit('cancel')
+      this.destroy()
     },
 
     onImgElementError() {
@@ -249,7 +249,7 @@ export default {
       } else if (this.cleanedMimes) {
         const correctType = this.cleanedMimes
           .split(', ')
-          .find((mime) => mime === file.type)
+          .find(mime => mime === file.type)
 
         if (!correctType) {
           this.$emit('error', {
@@ -261,14 +261,15 @@ export default {
       }
 
       const reader = new FileReader()
-      reader.onload = (e) => {
+      reader.onload = e => {
         this.dataUrl = e.target.result
       }
 
       reader.readAsDataURL(file)
 
-      this.filename = file.name || 'unknown'
-      this.mimeType = this.mimeType || file.type
+      this.fileName = file.name || 'unknown'
+      this.mimeType = file.type
+
       this.$emit('changed', {
         file,
         reader,
@@ -282,23 +283,46 @@ export default {
     },
 
     createCropper() {
-      this.cropper = new Cropper(
-        this.$refs.img,
-        this.cropperOptions,
-      )
+      this.cropper = new Cropper(this.$refs.img, this.cropperOptions)
+    },
+
+    getFilename(blob) {
+      const extension = mime.getExtension(blob.type)
+
+      // Default logic
+      if (!this.uploadFileName) {
+        let actualFilename = this.fileName
+
+        const filenameParts = this.fileName.split('.')
+        if (filenameParts.length > 1)
+          actualFilename = filenameParts.slice(0, -1).join('.')
+
+        return `${actualFilename}.${extension}`
+      }
+
+      // User provided filename
+      if (typeof this.uploadFileName === 'string') return this.uploadFileName
+
+      if (typeof this.uploadFileName === 'function')
+        return this.uploadFileName({
+          filename: this.fileName,
+          mime: blob.type,
+          extension,
+        })
+
+      return `unknown.${extension}`
     },
 
     uploadImage() {
-      this.cropper
-        .getCroppedCanvas(this.outputOptions)
-        .toBlob(async (blob) => {
+      this.cropper.getCroppedCanvas(this.outputOptions).toBlob(
+        async blob => {
           const form = new FormData()
 
           for (const [key, value] in this.uploadFormData.entries()) {
             form.append(key, value)
           }
 
-          form.append(this.uploadFileField, blob, this.filename)
+          form.append(this.uploadFileField, blob, this.getFilename(blob))
 
           const requestOptions = Object.assign(
             {
@@ -307,10 +331,7 @@ export default {
             this.requestOptions,
           )
 
-          const request = new Request(
-            this.uploadUrl,
-            requestOptions,
-          )
+          const request = new Request(this.uploadUrl, requestOptions)
 
           const reqPromise = fetch(request)
 
@@ -345,7 +366,7 @@ export default {
             })
           }
         },
-        this.outputMime,
+        this.outputMime || this.mimeType,
         this.outputQuality,
       )
     },
@@ -368,7 +389,7 @@ export default {
     z-index: 99999;
   }
 
-  .avatar-cropper-overlay-inline{
+  .avatar-cropper-overlay-inline {
     position: initial;
   }
 
