@@ -22,13 +22,14 @@
 
 ### Browsers
 
-1. Include the link to AvatarCropper in `<head>` alongside Vue.js and Cropper.js:
+1. Include the link to AvatarCropper in `<head>` alongside [Vue.js](https://www.npmjs.com/package/vue), [Cropper.js](https://www.npmjs.com/package/cropperjs) and [Mime](https://www.npmjs.com/package/mime):
 
    ```html
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs/dist/cropper.min.css">
    <script src="https://cdn.jsdelivr.net/npm/cropperjs"></script>
    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
    <script src="https://cdn.jsdelivr.net/npm/vue-avatar-cropper"></script>
+   <script src="https://wzrd.in/standalone/mime%2flite@latest"></script>
    ```
 
 2. AvatarCropper will auto-install upon detecting the global Vue instance. You can use it right away.
