@@ -72,7 +72,7 @@ Property Name | Type | Description
 `file` | File | [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) to use instead of prompting the user to upload one
 `upload-url` | String | URL to upload the file to
 `upload-file-field` | String | [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) field to use for the file. Default: `'file'`
-`upload-file-name` | String/Function | File name to use for the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) field. Can be `String` or `Function({ filename, mime, extension }) => String`. Default: Automatically determined from the uploaded `File`'s `name` property and the extension of the output MIME.
+`upload-file-name` | String/Function | File name to use for the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) field. Can be `String` or `Function({ filename, mime, extension }) => String`. Default: Automatically determined from the uploaded [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)'s `name` property and the extension of the output MIME.
 `upload-form-data` | FormData | Additional [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData). Default: `new FormData()`
 `upload-handler` | Function | Handler to replace default upload handler, the argument is [cropperJS](https://github.com/fengyuanchen/cropperjs) instance.
 `request-options` | Object | Options passed to the `init` parameter of the [Request()](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) constructor. Use this to set the method, headers, etc. Default: `{ method: 'POST' }`
