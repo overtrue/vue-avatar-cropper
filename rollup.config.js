@@ -13,11 +13,12 @@ const production = process.env.NODE_ENV === 'production' && !process.env.ROLLUP_
 
 const external = Object
   .keys(pkg.dependencies || {})
-  .concat(['vue', 'cropperjs/dist/cropper.css'])
+  .concat(['vue', 'cropperjs/dist/cropper.css', 'mime/lite'])
 
 const globals = {
   cropperjs: 'Cropper',
   vue: 'Vue',
+  'mime/lite': 'mime',
 }
 
 const output = []
