@@ -56,7 +56,7 @@
     "rollup-plugin-vue": "5.1.9",
     "sirv-cli": "^1.0.14",
     "vue": "^2.6.14",
-    "vue-eslint-parser": "^7.11.0",
+    "vue-eslint-parser": "^8.0.0",
     "vue-template-compiler": "^2.6.14"
   },
   "dependencies": {
