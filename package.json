@@ -18,10 +18,8 @@
     "src/vue-avatar-cropper.vue"
   ],
   "scripts": {
-    "build": "NODE_ENV=production rollup -c",
-    "dev:build": "rollup -c -w --no-watch.clearScreen",
-    "dev:serve": "sirv ./dev -s -D -p 8629",
-    "dev": "run-p dev:build dev:serve",
+    "build": "NODE_ENV=production vite build",
+    "dev": "vite serve ./dev --clearScreen false",
     "dev:net": "run-p dev:build 'dev:serve --host'",
     "test:lint": "eslint .",
     "pretest": "run-s build",
@@ -43,6 +41,7 @@
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",
     "@rollup/plugin-babel": "^5.3.0",
+    "@vitejs/plugin-vue": "^2.0.0",
     "@vue/compiler-sfc": "^3.2.11",
     "autoprefixer": "^10.3.4",
     "eslint": "^8.1.0",
@@ -53,11 +52,12 @@
     "rollup": "^2.56.3",
     "rollup-plugin-postcss": "^4.0.1",
     "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-vue": "5.1.9",
+    "sass": "^1.45.0",
     "sirv-cli": "^1.0.14",
-    "vue": "^2.6.14",
+    "vite": "^2.7.2",
+    "vue": "^3.2.0",
     "vue-eslint-parser": "^8.0.1",
-    "vue-template-compiler": "^2.6.14"
+    "vue-loader": "^17.0.0"
   },
   "dependencies": {
     "cropperjs": "^1.5.12",
