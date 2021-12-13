@@ -3,18 +3,18 @@
   "description": "A simple and elegant component to crop and upload avatars",
   "version": "5.0.2",
   "main": "./dist/vue-avatar-cropper.umd.js",
-  "module": "./dist/vue-avatar-cropper.esm.js",
+  "module": "./dist/vue-avatar-cropper.es.js",
   "unpkg": "./dist/vue-avatar-cropper.umd.js",
   "exports": {
     "require": "./dist/vue-avatar-cropper.umd.js",
-    "import": "./dist/vue-avatar-cropper.esm.js"
+    "import": "./dist/vue-avatar-cropper.es.js"
   },
   "browser": {
     "./sfc": "src/vue-avatar-cropper.vue"
   },
   "files": [
     "dist/vue-avatar-cropper.umd.js",
-    "dist/vue-avatar-cropper.esm.js",
+    "dist/vue-avatar-cropper.es.js",
     "src/vue-avatar-cropper.vue"
   ],
   "scripts": {
@@ -51,7 +51,7 @@
     "sass": "^1.45.0",
     "sirv-cli": "^1.0.14",
     "vite": "^2.7.2",
-    "vue": "^3.2.0",
+    "vue": "^3.0.0",
     "vue-eslint-parser": "^8.0.1",
     "vue-loader": "^17.0.0"
   },
