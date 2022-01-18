@@ -22,8 +22,8 @@
       <div>
         <div class="text-center">
           <img v-if="userAvatar" :src="userAvatar" />
-          <button @click="() => { showCropper = true }">Select an image</button>
-          <button @click="() => renderAvatarCropper = !renderAvatarCropper">
+          <button @click="showCropper = true">Select an image</button>
+          <button @click="renderAvatarCropper = !renderAvatarCropper">
             {{ renderAvatarCropper ? 'Unmount' : 'Mount' }} avatar cropper
           </button>
           <avatar-cropper

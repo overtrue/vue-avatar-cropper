@@ -11,7 +11,7 @@
 ## Basic usage
 
 ```html
-<button @click="() => { showCropper = true }">Select an image</button>
+<button @click="showCropper = true">Select an image</button>
 
 <avatar-cropper
   v-model="showCropper"
@@ -55,7 +55,7 @@
 2. Add a trigger button and `<avatar-cropper>` to mount the component:
 
 ```html
-<button @click="() => { showCropper = true }">Select an image</button>
+<button @click="showCropper = true">Select an image</button>
 
 <avatar-cropper
   v-model="showCropper"
