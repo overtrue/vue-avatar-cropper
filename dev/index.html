@@ -1,58 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>[DEV] vue-avatar-cropper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8" />
-  <title>[DEV] vue-avatar-cropper</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- development version, includes helpful console warnings -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/cropperjs@1.5.12/dist/cropper.min.css"
+    />
+    <script src="https://unpkg.com/cropperjs@1.5.12/dist/cropper.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./mimelite.js"></script>
+    <script src="avatar-cropper.js"></script>
+  </head>
 
-  <!-- development version, includes helpful console warnings -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" integrity="sha512-0SPWAwpC/17yYyZ/4HSllgaK7/gg9OlVozq8K7rf3J8LvCjYEEIfzzpnA2/SSjpGIunCSD18r3UhvDcu/xncWA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js" integrity="sha512-ooSWpxJsiXe6t4+PPjCgYmVfr1NS5QXJACcR/FPpsdm6kqG1FmQ2SVyg2RXeVuCRBLr0lWHnWJP6Zs1Efvxzww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="./mimelite.js"></script>
-  <script src="vue-avatar-cropper.js"></script>
-</head>
-
-<body>
-  <div id="app">
-    <h2>vue-avatar-cropper demo: vanilla Vue.js</h2>
-    <div>
-      <div class="text-center">
-        <img v-if="userAvatar" :src="userAvatar" />
-        <button @click="() => { trigger = true }">Select an image</button>
-        <button @click="() => renderAvatarCropper = !renderAvatarCropper">
-          {{ renderAvatarCropper ? 'Unmount' : 'Mount' }} avatar cropper
-        </button>
-        <avatar-cropper v-if="renderAvatarCropper" v-model="trigger" upload-url="/files/upload" @uploaded="handleUploaded" @error="consoleError" />
+  <body>
+    <div id="app">
+      <h2>vue-avatar-cropper demo: vanilla Vue.js</h2>
+      <div>
+        <div class="text-center">
+          <img v-if="userAvatar" :src="userAvatar" />
+          <button @click="() => { showCropper = true }">Select an image</button>
+          <button @click="() => renderAvatarCropper = !renderAvatarCropper">
+            {{ renderAvatarCropper ? 'Unmount' : 'Mount' }} avatar cropper
+          </button>
+          <avatar-cropper
+            v-if="renderAvatarCropper"
+            v-model="showCropper"
+            upload-url="/files/upload"
+            @uploaded="handleUploaded"
+            @error="consoleError"
+          />
+        </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    new Vue({
-      el: "#app",
+    <script>
+      Vue.createApp({
+        el: '#app',
 
-      data() {
-        return {
-          trigger: false,
-          userAvatar: undefined,
-          renderAvatarCropper: true,
-        }
-      },
-
-      methods: {
-        handleUploaded(event) {
-          console.log("uploaded", event)
+        data() {
+          return {
+            showCropper: false,
+            userAvatar: undefined,
+            renderAvatarCropper: true,
+          }
         },
 
-        consoleError({ type, message }) {
-          console.log(`Avatar Cropper Error\nType: ${type}\nMessage: ${message}`)
-        },
-      },
-    });
-  </script>
-</body>
+        methods: {
+          handleUploaded(event) {
+            console.log('uploaded', event)
+          },
 
+          consoleError({ type, message }) {
+            console.log(
+              `Avatar Cropper Error\nType: ${type}\nMessage: ${message}`,
+            )
+          },
+        },
+      })
+        .use(AvatarCropper)
+        .mount('#app')
+    </script>
+  </body>
 </html>

@@ -58,13 +58,19 @@ import mime from 'mime/lite'
 export default {
   name: 'AvatarCropper',
 
-  model: {
-    prop: 'trigger',
-    event: 'triggered',
-  },
+  emits: [
+    'update:modelValue',
+    'submit',
+    'error',
+    'cancel',
+    'changed',
+    'uploading',
+    'completed',
+    'uploaded',
+  ],
 
   props: {
-    trigger: {
+    modelValue: {
       type: Boolean,
       default: false,
     },
@@ -177,7 +183,7 @@ export default {
   },
 
   watch: {
-    trigger(value) {
+    modelValue(value) {
       if (!value) return
 
       if (this.file) {
@@ -186,12 +192,12 @@ export default {
         this.pickImage()
       }
 
-      this.$emit('triggered', false)
+      this.$emit('update:modelValue', false)
     },
   },
 
   mounted() {
-    this.$emit('triggered', false)
+    this.$emit('update:modelValue', false)
   },
 
   methods: {
@@ -249,7 +255,7 @@ export default {
       } else if (this.cleanedMimes) {
         const correctType = this.cleanedMimes
           .split(', ')
-          .find(mime => mime === file.type)
+          .find((mime) => mime === file.type)
 
         if (!correctType) {
           this.$emit('error', {
@@ -261,7 +267,7 @@ export default {
       }
 
       const reader = new FileReader()
-      reader.onload = e => {
+      reader.onload = (e) => {
         this.dataUrl = e.target.result
       }
 
@@ -315,7 +321,7 @@ export default {
 
     uploadImage() {
       this.cropper.getCroppedCanvas(this.outputOptions).toBlob(
-        async blob => {
+        async (blob) => {
           const form = new FormData()
 
           for (const [key, value] in this.uploadFormData.entries()) {

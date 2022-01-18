@@ -3,17 +3,21 @@ import vue from 'rollup-plugin-vue'
 import postcss from 'rollup-plugin-postcss'
 import autoprefixer from 'autoprefixer'
 import { terser } from 'rollup-plugin-terser'
+import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 
 import pkg from './package.json'
 
-const name = 'vue-avatar-cropper'
-const outFilename = (infix) => `./dist/vue-avatar-cropper.${infix}.js`
+const name = 'AvatarCropper'
+const outFilename = (infix) => `./dist/avatar-cropper.${infix}.js`
 
-const production = process.env.NODE_ENV === 'production' && !process.env.ROLLUP_WATCH
+const production =
+  process.env.NODE_ENV === 'production' && !process.env.ROLLUP_WATCH
 
-const external = Object
-  .keys(pkg.dependencies || {})
-  .concat(['vue', 'cropperjs/dist/cropper.css', 'mime/lite'])
+const external = Object.keys(pkg.dependencies || {}).concat([
+  'vue',
+  'cropperjs/dist/cropper.css',
+  'mime/lite',
+])
 
 const globals = {
   cropperjs: 'Cropper',
@@ -33,10 +37,9 @@ const plugins = [
     },
   }),
   postcss({
-    plugins: [
-      autoprefixer,
-    ],
+    plugins: [autoprefixer],
   }),
+  peerDepsExternal(),
 ]
 
 if (production) {
@@ -47,24 +50,19 @@ if (production) {
       name,
       plugins: [
         getBabelOutputPlugin({
-          presets: [
-            '@babel/env',
-          ],
+          presets: ['@babel/env'],
         }),
         terser({ output: { ecma: 6 } }),
       ],
       globals,
     },
-
     {
       file: outFilename('umd'),
       format: 'esm',
       name,
       plugins: [
         getBabelOutputPlugin({
-          presets: [
-            ['@babel/env', { modules: 'umd' }],
-          ],
+          presets: [['@babel/env', { modules: 'umd' }]],
         }),
         terser({ output: { ecma: 5 } }),
       ],
@@ -73,7 +71,7 @@ if (production) {
   )
 } else {
   output.push({
-    file: './dev/vue-avatar-cropper.js',
+    file: './dev/avatar-cropper.js',
     format: 'umd',
     name,
     globals,

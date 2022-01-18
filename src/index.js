@@ -1,25 +1,7 @@
-import component from './vue-avatar-cropper.vue'
+import AvatarCropper from './AvatarCropper.vue'
 
-// executed by Vue.use()
-const install = (Vue) => {
-  if (install.installed) return
-  install.installed = true
-  Vue.component(component.name, component)
+export default {
+  install(Vue) {
+    Vue.component('avatar-cropper', AvatarCropper)
+  },
 }
-
-// auto-install when Vue is found
-let GlobalVue = null
-
-if (typeof window !== 'undefined') {
-  GlobalVue = window.Vue
-} else if (typeof global !== 'undefined') {
-  /* eslint-disable-next-line no-undef */
-  GlobalVue = global.Vue
-}
-
-if (GlobalVue) {
-  GlobalVue.use({ install })
-}
-
-// to allow module use
-export default component

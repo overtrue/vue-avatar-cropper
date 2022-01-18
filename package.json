@@ -1,7 +1,7 @@
 {
   "name": "vue-avatar-cropper",
   "description": "A simple and elegant component to crop and upload avatars",
-  "version": "5.0.2",
+  "version": "6.0.0",
   "main": "./dist/vue-avatar-cropper.umd.js",
   "module": "./dist/vue-avatar-cropper.esm.js",
   "unpkg": "./dist/vue-avatar-cropper.umd.js",
@@ -39,6 +39,9 @@
     "avatar-cropper",
     "vue-avatar-cropper"
   ],
+  "peerDependencies": {
+    "vue": "^3.2.21"
+  },
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",
@@ -50,14 +53,14 @@
     "node-sass": "^7.0.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.3.6",
-    "rollup": "^2.56.3",
+    "rollup": "^2.64.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.1",
     "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-vue": "5.1.9",
+    "rollup-plugin-vue": "^6.0.0",
     "sirv-cli": "^2.0.1",
-    "vue": "^2.6.14",
-    "vue-eslint-parser": "^8.0.1",
-    "vue-template-compiler": "^2.6.14"
+    "vue": "^3.2.21",
+    "vue-eslint-parser": "^8.0.1"
   },
   "dependencies": {
     "cropperjs": "^1.5.12",
@@ -66,7 +69,7 @@
   "author": {
     "name": "overtrue",
     "email": "i@overtrue.me",
-    "url": "https://overtrue.me"
+    "url": "https://github.com/overtrue"
   },
   "engines": {
     "node": ">=10"
