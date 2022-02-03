@@ -15,7 +15,7 @@
   "files": [
     "dist/avatar-cropper.umd.js",
     "dist/avatar-cropper.esm.js",
-    "src/AvatarCropper.vue"
+    "src/AvatarCropper.vue",
     "src/index.js"
   ],
   "scripts": {
