@@ -2,7 +2,6 @@ npm-debug.log
 .DS_Store
 .cache
 .idea
-dist
 node_modules
 .vscode
 axe-linter.yml
