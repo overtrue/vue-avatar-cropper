@@ -16,6 +16,7 @@
     "dist/avatar-cropper.umd.js",
     "dist/avatar-cropper.esm.js",
     "src/AvatarCropper.vue"
+    "src/index.js"
   ],
   "scripts": {
     "build": "NODE_ENV=production rollup -c",
