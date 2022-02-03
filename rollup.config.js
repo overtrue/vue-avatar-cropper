@@ -52,7 +52,7 @@ if (production) {
         getBabelOutputPlugin({
           presets: ['@babel/env'],
         }),
-        terser({ output: { ecma: 2020 } }),
+        terser({ output: { ecma: 6 } }),
       ],
       globals,
     },
@@ -64,7 +64,7 @@ if (production) {
         getBabelOutputPlugin({
           presets: [['@babel/env', { modules: 'umd' }]],
         }),
-        terser({ output: { ecma: 2020 } }),
+        terser({ output: { ecma: 5 } }),
       ],
       globals,
     },
