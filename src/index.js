@@ -1,7 +1,7 @@
 import AvatarCropper from './AvatarCropper.vue'
 
-export default {
-  install(Vue) {
-    Vue.component('avatar-cropper', AvatarCropper)
-  },
+AvatarCropper.install = (Vue) => {
+  Vue.component('avatar-cropper', AvatarCropper)
 }
+
+export default AvatarCropper

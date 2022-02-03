@@ -11,10 +11,10 @@
           class="avatar-cropper-close"
           :title="labels.cancel"
           href="javascript:;"
-          >&times;</a
         >
+          &times;
+        </a>
       </div>
-
       <div class="avatar-cropper-container">
         <div class="avatar-cropper-image-container">
           <img
@@ -25,7 +25,6 @@
             @error="onImgElementError"
           />
         </div>
-
         <div class="avatar-cropper-footer">
           <button @click.stop.prevent="cancel" class="avatar-cropper-btn">
             {{ labels.cancel }}
@@ -37,7 +36,6 @@
         </div>
       </div>
     </div>
-
     <input
       v-if="!file"
       :accept="cleanedMimes"
@@ -54,8 +52,9 @@
 import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
 import mime from 'mime/lite'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'AvatarCropper',
 
   emits: [
@@ -377,7 +376,7 @@ export default {
       )
     },
   },
-}
+})
 </script>
 
 <style lang="scss">
