@@ -40,6 +40,9 @@ const plugins = [
     plugins: [autoprefixer],
   }),
   peerDepsExternal(),
+  [
+    '@babel/plugin-transform-runtime',
+  ],
 ]
 
 if (production) {

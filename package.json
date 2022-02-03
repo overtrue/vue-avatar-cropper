@@ -64,6 +64,7 @@
     "vue-eslint-parser": "^8.0.1"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.17.0",
     "cropperjs": "^1.5.12",
     "mime": "^3.0.0"
   },
