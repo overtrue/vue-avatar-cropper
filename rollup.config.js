@@ -40,9 +40,6 @@ const plugins = [
     plugins: [autoprefixer],
   }),
   peerDepsExternal(),
-  [
-    '@babel/plugin-transform-runtime',
-  ],
 ]
 
 if (production) {
@@ -54,6 +51,11 @@ if (production) {
       plugins: [
         getBabelOutputPlugin({
           presets: ['@babel/env'],
+          plugins: [
+              '@babel/transform-runtime',
+              '@babel/transform-regenerator',
+              '@babel/transform-async-to-generator',
+          ],
         }),
         terser({ output: { ecma: 6 } }),
       ],
@@ -66,6 +68,11 @@ if (production) {
       plugins: [
         getBabelOutputPlugin({
           presets: [['@babel/env', { modules: 'umd' }]],
+          plugins: [
+                '@babel/transform-runtime',
+                '@babel/transform-regenerator',
+                '@babel/transform-async-to-generator',
+            ],
         }),
         terser({ output: { ecma: 5 } }),
       ],
