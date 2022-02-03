@@ -13,9 +13,9 @@
     "./sfc": "src/vue-avatar-cropper.vue"
   },
   "files": [
-    "dist/vue-avatar-cropper.umd.js",
-    "dist/vue-avatar-cropper.esm.js",
-    "src/vue-avatar-cropper.vue"
+    "dist/avatar-cropper.umd.js",
+    "dist/avatar-cropper.esm.js",
+    "src/AvatarCropper.vue"
   ],
   "scripts": {
     "build": "NODE_ENV=production rollup -c",
