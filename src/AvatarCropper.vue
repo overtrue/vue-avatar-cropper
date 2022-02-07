@@ -323,7 +323,7 @@ export default defineComponent({
         async (blob) => {
           const form = new FormData()
 
-          for (const [key, value] in this.uploadFormData.entries()) {
+          for (const [key, value] of this.uploadFormData.entries()) {
             form.append(key, value)
           }
 
