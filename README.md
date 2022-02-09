@@ -48,7 +48,7 @@
    />
    <script src="https://unpkg.com/cropperjs@1.5.12/dist/cropper.js"></script>
    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-   <script src="https://unpkg.com/vue-avatar-cropper/dist/vue-avatar-cropper.umd.js"></script>
+   <script src="https://unpkg.com/vue-avatar-cropper/dist/avatar-cropper.umd.js"></script>
    <script src="https://wzrd.in/standalone/mime%2flite@latest"></script>
    ```
 
