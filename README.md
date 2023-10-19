@@ -6,8 +6,6 @@
 
 [![Edit Demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/vue-avatar-cropper-for-vue3-i3c8v)
 
-[![Sponsor me](https://github.com/overtrue/overtrue/blob/master/sponsor-me-button-s.svg?raw=true)](https://github.com/sponsors/overtrue)
-
 ## Basic usage
 
 ```html
@@ -34,6 +32,16 @@
   }
 </script>
 ```
+
+## Need more editing features?
+
+Pintura the modern JavaScript Image Editor is what you're looking for. 
+
+Pintura supports setting crop aspect ratios, resizing, rotating, cropping, flipping images, and more.
+
+[Learn more about Pintura](https://pqina.nl/pintura/?ref=vue-avatar-cropper)
+
+[<img src="https://github.com/pqina/filepond-github-assets/blob/master/filepond_pintura.gif?raw=true" width="600" alt=""/>](https://pqina.nl/pintura/?ref=vue-avatar-cropper)
 
 ## Installing
 
