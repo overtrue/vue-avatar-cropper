@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "cropperjs": "^1.5.12",
-    "mime": "^3.0.0"
+    "mime": "^4.0.0"
   },
   "author": {
     "name": "overtrue",
