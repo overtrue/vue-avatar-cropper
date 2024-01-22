@@ -4471,9 +4471,9 @@ validate-npm-package-license@^3.0.1:
     spdx-expression-parse "^3.0.0"
 
 vue-eslint-parser@^9.0.3, vue-eslint-parser@^9.3.1:
-  version "9.3.2"
-  resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-9.3.2.tgz#6f9638e55703f1c77875a19026347548d93fd499"
-  integrity sha512-q7tWyCVaV9f8iQyIA5Mkj/S6AoJ9KBN8IeUSf3XEmBrOtxOZnfTg5s4KClbZBCK3GtnT/+RyCLZyDHuZwTuBjg==
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-9.4.1.tgz#3375106ba45f65c4d6f59ec6635a1f51d0726fa2"
+  integrity sha512-EmIbJ5cCI/E06SlI8K5sldVZ+Ef5vy26Ck0lNALxgY7FEAMOjNR32qcsVM3FUJUbvVWTBEiOy5lQvbhPK/ynBw==
   dependencies:
     debug "^4.3.4"
     eslint-scope "^7.1.1"
