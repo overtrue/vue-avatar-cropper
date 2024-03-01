@@ -1,15 +1,15 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('cropperjs/dist/cropper.css'), require('cropperjs'), require('mime/lite'), require('vue')) :
-  typeof define === 'function' && define.amd ? define(['cropperjs/dist/cropper.css', 'cropperjs', 'mime/lite', 'vue'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.AvatarCropper = factory(null, global.Cropper, global.mime, global.Vue));
-})(this, (function (cropper_css, Cropper, mime, vue) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('cropperjs'), require('cropperjs/dist/cropper.css'), require('mime/lite'), require('vue')) :
+  typeof define === 'function' && define.amd ? define(['cropperjs', 'cropperjs/dist/cropper.css', 'mime/lite', 'vue'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.AvatarCropper = factory(global.Cropper, null, global.mime, global.Vue));
+})(this, (function (Cropper, cropper_css, mime, vue) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
   var Cropper__default = /*#__PURE__*/_interopDefaultLegacy(Cropper);
   var mime__default = /*#__PURE__*/_interopDefaultLegacy(mime);
 
-  var script = {
+  var script = vue.defineComponent({
     name: 'AvatarCropper',
 
     emits: [
@@ -278,7 +278,7 @@
           async (blob) => {
             const form = new FormData();
 
-            for (const [key, value] in this.uploadFormData.entries()) {
+            for (const [key, value] of this.uploadFormData.entries()) {
               form.append(key, value);
             }
 
@@ -331,7 +331,7 @@
         );
       },
     },
-  };
+  });
 
   const _hoisted_1 = { class: "avatar-cropper" };
   const _hoisted_2 = {
@@ -347,54 +347,55 @@
 
   function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1, [
-      ($data.dataUrl)
+      (_ctx.dataUrl)
         ? (vue.openBlock(), vue.createElementBlock("div", {
             key: 0,
-            class: vue.normalizeClass(["avatar-cropper-overlay", { 'avatar-cropper-overlay-inline': $props.inline }])
+            class: vue.normalizeClass(["avatar-cropper-overlay", { 'avatar-cropper-overlay-inline': _ctx.inline }])
           }, [
-            (!$props.inline)
+            (!_ctx.inline)
               ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2, [
                   vue.createElementVNode("a", {
-                    onClick: _cache[0] || (_cache[0] = (...args) => ($options.cancel && $options.cancel(...args))),
+                    onClick: _cache[0] || (_cache[0] = (...args) => (_ctx.cancel && _ctx.cancel(...args))),
                     class: "avatar-cropper-close",
-                    title: $props.labels.cancel,
+                    title: _ctx.labels.cancel,
                     href: "javascript:;"
-                  }, "×", 8 /* PROPS */, _hoisted_3)
+                  }, " × ", 8 /* PROPS */, _hoisted_3)
                 ]))
               : vue.createCommentVNode("v-if", true),
             vue.createElementVNode("div", _hoisted_4, [
               vue.createElementVNode("div", _hoisted_5, [
                 vue.createElementVNode("img", {
                   ref: "img",
-                  src: $data.dataUrl,
+                  src: _ctx.dataUrl,
                   alt: "",
-                  onLoad: _cache[1] || (_cache[1] = vue.withModifiers((...args) => ($options.createCropper && $options.createCropper(...args)), ["stop"])),
-                  onError: _cache[2] || (_cache[2] = (...args) => ($options.onImgElementError && $options.onImgElementError(...args)))
-                }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_6)
+                  onLoad: _cache[1] || (_cache[1] = vue.withModifiers((...args) => (_ctx.createCropper && _ctx.createCropper(...args)), ["stop"])),
+                  onError: _cache[2] || (_cache[2] = (...args) => (_ctx.onImgElementError && _ctx.onImgElementError(...args)))
+                }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_6)
               ]),
+              vue.renderSlot(_ctx.$slots, "default"),
               vue.createElementVNode("div", _hoisted_7, [
                 vue.createElementVNode("button", {
-                  onClick: _cache[3] || (_cache[3] = vue.withModifiers((...args) => ($options.cancel && $options.cancel(...args)), ["stop","prevent"])),
+                  onClick: _cache[3] || (_cache[3] = vue.withModifiers((...args) => (_ctx.cancel && _ctx.cancel(...args)), ["stop","prevent"])),
                   class: "avatar-cropper-btn"
-                }, vue.toDisplayString($props.labels.cancel), 1 /* TEXT */),
+                }, vue.toDisplayString(_ctx.labels.cancel), 1 /* TEXT */),
                 vue.createElementVNode("button", {
-                  onClick: _cache[4] || (_cache[4] = vue.withModifiers((...args) => ($options.submit && $options.submit(...args)), ["stop","prevent"])),
+                  onClick: _cache[4] || (_cache[4] = vue.withModifiers((...args) => (_ctx.submit && _ctx.submit(...args)), ["stop","prevent"])),
                   class: "avatar-cropper-btn"
-                }, vue.toDisplayString($props.labels.submit), 1 /* TEXT */)
+                }, vue.toDisplayString(_ctx.labels.submit), 1 /* TEXT */)
               ])
             ])
           ], 2 /* CLASS */))
         : vue.createCommentVNode("v-if", true),
-      (!$props.file)
+      (!_ctx.file)
         ? (vue.openBlock(), vue.createElementBlock("input", {
             key: 1,
-            accept: $options.cleanedMimes,
-            capture: $props.capture,
+            accept: _ctx.cleanedMimes,
+            capture: _ctx.capture,
             class: "avatar-cropper-img-input",
             ref: "input",
             type: "file",
-            onChange: _cache[5] || (_cache[5] = (...args) => ($options.onFileInputChange && $options.onFileInputChange(...args)))
-          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_8))
+            onChange: _cache[5] || (_cache[5] = (...args) => (_ctx.onFileInputChange && _ctx.onFileInputChange(...args)))
+          }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_8))
         : vue.createCommentVNode("v-if", true)
     ]))
   }
@@ -432,12 +433,10 @@
   script.render = render;
   script.__file = "src/AvatarCropper.vue";
 
-  var index = {
-    install(Vue) {
-      Vue.component('avatar-cropper', script);
-    },
+  script.install = (Vue) => {
+    Vue.component('avatar-cropper', script);
   };
 
-  return index;
+  return script;
 
 }));

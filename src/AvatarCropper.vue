@@ -1,30 +1,16 @@
 <template>
   <div class="avatar-cropper">
-    <div
-      class="avatar-cropper-overlay"
-      :class="{ 'avatar-cropper-overlay-inline': inline }"
-      v-if="dataUrl"
-    >
+    <div class="avatar-cropper-overlay" :class="{ 'avatar-cropper-overlay-inline': inline }" v-if="dataUrl">
       <div class="avatar-cropper-mark" v-if="!inline">
-        <a
-          @click="cancel"
-          class="avatar-cropper-close"
-          :title="labels.cancel"
-          href="javascript:;"
-        >
+        <a @click="cancel" class="avatar-cropper-close" :title="labels.cancel" href="javascript:;">
           &times;
         </a>
       </div>
       <div class="avatar-cropper-container">
         <div class="avatar-cropper-image-container">
-          <img
-            ref="img"
-            :src="dataUrl"
-            alt
-            @load.stop="createCropper"
-            @error="onImgElementError"
-          />
+          <img ref="img" :src="dataUrl" alt @load.stop="createCropper" @error="onImgElementError" />
         </div>
+        <slot></slot>
         <div class="avatar-cropper-footer">
           <button @click.stop.prevent="cancel" class="avatar-cropper-btn">
             {{ labels.cancel }}
@@ -36,21 +22,13 @@
         </div>
       </div>
     </div>
-    <input
-      v-if="!file"
-      :accept="cleanedMimes"
-      :capture="capture"
-      class="avatar-cropper-img-input"
-      ref="input"
-      type="file"
-      @change="onFileInputChange"
-    />
+    <input v-if="!file" :accept="cleanedMimes" :capture="capture" class="avatar-cropper-img-input" ref="input" type="file" @change="onFileInputChange" />
   </div>
 </template>
 
 <script>
-import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
+import 'cropperjs/dist/cropper.css'
 import mime from 'mime/lite'
 import { defineComponent } from 'vue'
 
