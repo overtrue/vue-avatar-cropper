@@ -1,4 +1,4 @@
-[Vue Avatar Cropper](https://github.com/overtrue/vue-avatar-cropper)
+<h1><a href="https://github.com/overtrue/vue-avatar-cropper">Vue Avatar Cropper</a></h1>
 
 :girl: A simple and elegant component to crop and upload avatars.
 
