@@ -1079,6 +1079,16 @@
     estree-walker "^2.0.2"
     source-map-js "^1.0.2"
 
+"@vue/compiler-core@3.4.23":
+  version "3.4.23"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-core/-/compiler-core-3.4.23.tgz#a08f5998e391ad75e602a66dd7255af9054df2f3"
+  dependencies:
+    "@babel/parser" "^7.24.1"
+    "@vue/shared" "3.4.23"
+    entities "^4.5.0"
+    estree-walker "^2.0.2"
+    source-map-js "^1.2.0"
+
 "@vue/compiler-dom@3.4.21":
   version "3.4.21"
   resolved "https://registry.npmjs.org/@vue/compiler-dom/-/compiler-dom-3.4.21.tgz"
@@ -1086,7 +1096,14 @@
     "@vue/compiler-core" "3.4.21"
     "@vue/shared" "3.4.21"
 
-"@vue/compiler-sfc@3.4.21", "@vue/compiler-sfc@^3.2.11":
+"@vue/compiler-dom@3.4.23":
+  version "3.4.23"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-dom/-/compiler-dom-3.4.23.tgz#6fa622d1e5c8508551564c5dc5948e9cddf60867"
+  dependencies:
+    "@vue/compiler-core" "3.4.23"
+    "@vue/shared" "3.4.23"
+
+"@vue/compiler-sfc@3.4.21":
   version "3.4.21"
   resolved "https://registry.npmjs.org/@vue/compiler-sfc/-/compiler-sfc-3.4.21.tgz"
   dependencies:
@@ -1100,12 +1117,33 @@
     postcss "^8.4.35"
     source-map-js "^1.0.2"
 
+"@vue/compiler-sfc@^3.2.11":
+  version "3.4.23"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.4.23.tgz#7041517b9bbd1b304f0db33bfa424e9a899fda8d"
+  dependencies:
+    "@babel/parser" "^7.24.1"
+    "@vue/compiler-core" "3.4.23"
+    "@vue/compiler-dom" "3.4.23"
+    "@vue/compiler-ssr" "3.4.23"
+    "@vue/shared" "3.4.23"
+    estree-walker "^2.0.2"
+    magic-string "^0.30.8"
+    postcss "^8.4.38"
+    source-map-js "^1.2.0"
+
 "@vue/compiler-ssr@3.4.21":
   version "3.4.21"
   resolved "https://registry.npmjs.org/@vue/compiler-ssr/-/compiler-ssr-3.4.21.tgz"
   dependencies:
     "@vue/compiler-dom" "3.4.21"
     "@vue/shared" "3.4.21"
+
+"@vue/compiler-ssr@3.4.23":
+  version "3.4.23"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-ssr/-/compiler-ssr-3.4.23.tgz#1ae4afe962a9e156b1a79eff909c37cd423dd4c2"
+  dependencies:
+    "@vue/compiler-dom" "3.4.23"
+    "@vue/shared" "3.4.23"
 
 "@vue/reactivity@3.4.21":
   version "3.4.21"
@@ -1138,6 +1176,10 @@
 "@vue/shared@3.4.21":
   version "3.4.21"
   resolved "https://registry.npmjs.org/@vue/shared/-/shared-3.4.21.tgz"
+
+"@vue/shared@3.4.23":
+  version "3.4.23"
+  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.4.23.tgz#e536a6dfd2f5f950d08c2e8ebcfe7e5329a851a1"
 
 abbrev@1:
   version "1.1.1"
@@ -2452,9 +2494,9 @@ lru-cache@^7.7.1:
   version "7.18.3"
   resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-7.18.3.tgz"
 
-magic-string@^0.30.7:
-  version "0.30.7"
-  resolved "https://registry.npmjs.org/magic-string/-/magic-string-0.30.7.tgz"
+magic-string@^0.30.7, magic-string@^0.30.8:
+  version "0.30.9"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.9.tgz#8927ae21bfdd856310e07a1bc8dd5e73cb6c251d"
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.15"
 
@@ -3154,7 +3196,7 @@ postcss-value-parser@^4.0.2, postcss-value-parser@^4.1.0, postcss-value-parser@^
   version "4.2.0"
   resolved "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz"
 
-postcss@^8.3.6, postcss@^8.4.35:
+postcss@^8.3.6, postcss@^8.4.35, postcss@^8.4.38:
   version "8.4.38"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.38.tgz#b387d533baf2054288e337066d81c6bee9db9e0e"
   dependencies:
