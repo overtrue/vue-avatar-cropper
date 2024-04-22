@@ -1472,8 +1472,8 @@ core-util-is@~1.0.0:
   resolved "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.3.tgz"
 
 cropperjs@^1.5.12:
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/cropperjs/-/cropperjs-1.6.1.tgz"
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-1.6.2.tgz#d1a5d627d880581cca41b7901f06923500e4201b"
 
 cross-spawn@^6.0.5:
   version "6.0.5"
